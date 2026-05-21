@@ -77,7 +77,7 @@ export default function MonthYearPicker({ value, onChange, disabled, placeholder
         left: dropPos.left,
         width: dropPos.width,
         zIndex: 9999,
-        background: 'rgba(20,20,34,0.98)',
+        background: 'var(--bg-card)',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
         borderRadius: 14,
@@ -89,12 +89,12 @@ export default function MonthYearPicker({ value, onChange, disabled, placeholder
       {/* Year row */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
         <button type="button" onClick={() => setViewYear(y => y - 1)}
-          style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid rgba(var(--rgb-fg),0.1)', background: 'rgba(var(--rgb-fg),0.07)', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid rgba(var(--rgb-fg),0.1)', background: 'rgba(var(--rgb-fg),0.07)', color: 'rgba(var(--rgb-fg), 0.95)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <ChevronLeft size={14} />
         </button>
-        <span style={{ fontWeight: 700, fontSize: 16, letterSpacing: '-0.3px', color: '#fff' }}>{viewYear}</span>
+        <span style={{ fontWeight: 700, fontSize: 16, letterSpacing: '-0.3px', color: 'rgba(var(--rgb-fg), 0.95)' }}>{viewYear}</span>
         <button type="button" onClick={() => setViewYear(y => y + 1)}
-          style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid rgba(var(--rgb-fg),0.1)', background: 'rgba(var(--rgb-fg),0.07)', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid rgba(var(--rgb-fg),0.1)', background: 'rgba(var(--rgb-fg),0.07)', color: 'rgba(var(--rgb-fg), 0.95)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <ChevronRight size={14} />
         </button>
       </div>

@@ -42,7 +42,7 @@ export default function AtsDialog({ onClose }: Props) {
       <div
         onClick={(e) => e.stopPropagation()}
         className="glass-card animate-scale-in"
-        style={{ width: 720, maxWidth: '100%', maxHeight: '90vh', display: 'flex', flexDirection: 'column', background: 'rgba(14,14,22,0.97)', padding: 0, overflow: 'hidden' }}
+        style={{ width: 720, maxWidth: '100%', maxHeight: '90vh', display: 'flex', flexDirection: 'column', padding: 0, overflow: 'hidden' }}
       >
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 22px', borderBottom: '1px solid rgba(var(--rgb-fg),0.08)' }}>
@@ -120,7 +120,7 @@ function AtsResultView({ result, onAgain, scoreColor }: { result: AtsAnalysis; o
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <div style={{
-            width: 76, height: 76, borderRadius: '50%', background: 'rgba(14,14,22,0.97)',
+            width: 76, height: 76, borderRadius: '50%', background: 'var(--bg-card)',
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           }}>
             <div style={{ fontSize: 24, fontWeight: 800, color: scoreColor, lineHeight: 1 }}>{result.score}</div>

@@ -212,7 +212,7 @@ export default function DocumentUpload() {
                 href={doc.dataUrl}
                 download={doc.name}
                 className="btn-glass btn-sm btn-icon"
-                style={{ padding: 7, color: '#fff', display: 'flex', alignItems: 'center' }}
+                style={{ padding: 7, display: 'flex', alignItems: 'center' }}
                 title={t("Herunterladen")}
               >
                 <ExternalLink size={14} />
