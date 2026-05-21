@@ -154,8 +154,13 @@ export default function LandingPage() {
         overflowY: 'auto',
         overflowX: 'hidden',
         fontFamily: 'var(--font-sf)',
+        background: '#0c0c0e',
         color: '#fff',
         scrollBehavior: 'smooth',
+        // Landing-Page ist immer Dark — unabhängig vom App-Theme.
+        // Erzwingt Dark-Tokens, damit rgba(var(--rgb-fg), …) hell statt dunkel ist.
+        ['--rgb-fg' as never]: '255, 255, 255',
+        ['--rgb-bg' as never]: '12, 12, 14',
       }}
     >
       {/* ── Sticky Nav ──────────────────────────────────────── */}
