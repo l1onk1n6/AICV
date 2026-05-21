@@ -271,7 +271,7 @@ export default function ProGate({ featureId, children, badge = false }: ProGateP
           <div onClick={() => setShowSoon(false)}
             style={{ position: 'fixed', inset: 0, zIndex: 9500, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(8px)' }}>
             <div className="glass-card animate-scale-in" onClick={e => e.stopPropagation()}
-              style={{ padding: '24px 28px', maxWidth: 320, textAlign: 'center', background: 'rgba(14,14,22,0.97)' }}>
+              style={{ padding: '24px 28px', maxWidth: 320, textAlign: 'center' }}>
               <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(88,86,214,0.2)', border: '1px solid rgba(88,86,214,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                 <Clock size={20} style={{ color: 'rgba(var(--rgb-fg),0.85)' }} />
               </div>

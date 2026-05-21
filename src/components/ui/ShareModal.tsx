@@ -60,7 +60,7 @@ export default function ShareModal({ resumeId, token, onClose }: Props) {
     <div style={{ position: 'fixed', inset: 0, zIndex: 9000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}>
       <div className="glass-card animate-scale-in"
-        style={{ padding: 20, width: 340, maxWidth: '90vw', zIndex: 9001, background: 'rgba(14,14,22,0.97)' }}
+        style={{ padding: 20, width: 340, maxWidth: '90vw', zIndex: 9001 }}
         onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
           <div style={{ fontWeight: 700, fontSize: 15 }}>{t('Lebenslauf teilen')}</div>

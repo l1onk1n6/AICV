@@ -291,7 +291,7 @@ export default function Preview() {
                 <div style={{
                   position: 'absolute', top: 'calc(100% + 6px)', right: 0, zIndex: 50,
                   minWidth: 220, padding: 6,
-                  background: 'rgba(14,14,22,0.97)',
+                  background: 'var(--bg-card)',
                   border: '1px solid rgba(var(--rgb-fg),0.12)',
                   borderRadius: 'var(--radius-sm)',
                   backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',

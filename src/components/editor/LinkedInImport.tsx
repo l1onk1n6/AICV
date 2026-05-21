@@ -121,7 +121,7 @@ export default function LinkedInImportDialog({ onClose }: Props) {
     >
       <div
         className="glass-card animate-scale-in"
-        style={{ padding: '24px 22px', width: 520, maxWidth: '95vw', maxHeight: '90vh', overflowY: 'auto', background: 'rgba(14,14,24,0.98)' }}
+        style={{ padding: '24px 22px', width: 520, maxWidth: '95vw', maxHeight: '90vh', overflowY: 'auto' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
@@ -145,7 +145,7 @@ export default function LinkedInImportDialog({ onClose }: Props) {
           <>
             {/* Desktop instructions */}
             <div style={{ padding: '12px 14px', borderRadius: 10, background: 'rgba(10,102,194,0.08)', border: '1px solid rgba(10,102,194,0.2)', fontSize: 13, color: 'rgba(var(--rgb-fg),0.7)', lineHeight: 1.6, marginBottom: 10 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, color: '#fff', fontWeight: 600 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, color: '#0A66C2', fontWeight: 600 }}>
                 <Monitor size={14} /> {t('Desktop')}
               </div>
               <ol style={{ margin: 0, padding: '0 0 0 18px', display: 'flex', flexDirection: 'column', gap: 3 }}>

@@ -193,7 +193,7 @@ export default function Dashboard() {
       {statusMenuResumeId && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(8px)' }} onClick={() => setStatusMenuResumeId(null)}>
           <div onClick={(e) => e.stopPropagation()} className="glass-card animate-scale-in"
-            style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 101, padding: 16, minWidth: 200, background: 'rgba(14,14,22,0.97)' }}>
+            style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 101, padding: 16, minWidth: 200 }}>
             <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 10, opacity: 0.7 }}>{t('Status: ').replace(': ', '')}</div>
             {ALL_STATUSES.map(s => (
               <button key={s} className="btn-glass"
