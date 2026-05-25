@@ -377,14 +377,13 @@ function rowToResume(row: Record<string, unknown>): Resume {
 export async function fetchSharedResume(token: string): Promise<Resume | null> {
   if (!isSupabaseConfigured()) return null;
   try {
-    const { data, error } = await sb()
-      .from('resumes')
-      .select('*')
-      .eq('share_token', token)
-      .not('share_token', 'is', null)
-      .maybeSingle();
-    if (error || !data) return null;
-    const resume = rowToResume(data as Record<string, unknown>);
+    // Token-gebundene RPC statt direktem Tabellen-SELECT: gibt nur die zum
+    // Token passende Zeile zurueck (keine Enumeration aller geteilten Mappen).
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (sb() as any).rpc('get_shared_resume', { p_token: token });
+    const row = Array.isArray(data) ? (data[0] as Record<string, unknown> | undefined) : null;
+    if (error || !row) return null;
+    const resume = rowToResume(row);
 
     // Aufruf-Zaehler erhoehen — fire-and-forget, nicht blockierend.
     // RPC ist SECURITY DEFINER und damit auch fuer anon-Besucher erlaubt.
@@ -393,15 +392,11 @@ export async function fetchSharedResume(token: string): Promise<Resume | null> {
       if (rpcErr) console.warn('[db] increment_share_view', rpcErr);
     });
 
-    // Dokumente des geteilten Resumes zusaetzlich laden (RLS erlaubt SELECT
-    // fuer Docs deren Resume einen share_token hat).
+    // Dokumente des geteilten Resumes zusaetzlich laden — ebenfalls token-
+    // gebunden ueber SECURITY-DEFINER-RPC.
     try {
-      const { data: docRows } = await sb()
-        .from('documents')
-        .select('*')
-        .eq('resume_id', resume.id)
-        .order('order_index', { ascending: true, nullsFirst: false })
-        .order('uploaded_at', { ascending: true });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: docRows } = await (sb() as any).rpc('get_shared_documents', { p_token: token });
 
       const rows = (docRows ?? []) as Record<string, unknown>[];
       const docs = await Promise.all(rows.map(async (row) => {
