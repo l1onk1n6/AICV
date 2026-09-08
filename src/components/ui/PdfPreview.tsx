@@ -101,7 +101,9 @@ function MobileCanvasPreview({ bytes, building, error }: Props) {
         // Worker, und ein spaeterer Render wirft "Detached ArrayBuffer".
         const copy = new Uint8Array(bytes);
         const doc = await pdfjsLib.getDocument({ data: copy }).promise;
-        if (cancelled) { doc.destroy(); return; }
+        // pdf.js 6 hat PDFDocumentProxy.destroy() entfernt — der Abbruch laeuft
+        // jetzt ueber den LoadingTask (identische Wirkung, war vorher nur ein Alias).
+        if (cancelled) { doc.loadingTask.destroy(); return; }
 
         container.innerHTML = '';
         setPageCount(doc.numPages);
