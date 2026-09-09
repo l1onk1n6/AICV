@@ -413,7 +413,10 @@ export async function fetchSharedResume(token: string): Promise<Resume | null> {
         const base = rowToDocument(row);
         const path = (row.storage_path as string) || null;
         if (path) {
-          const url = await signedUrlFor(path, shared);
+          // getSupabase() und getSharedSupabase() liefern nominal verschiedene
+          // createClient-Generics; fuer signedUrlFor (nutzt nur .storage) ist das
+          // egal, daher die Zusammenfuehrung des Typs.
+          const url = await signedUrlFor(path, shared as unknown as ReturnType<typeof getSupabase>);
           return { ...base, dataUrl: url ?? '' };
         }
         return base;
