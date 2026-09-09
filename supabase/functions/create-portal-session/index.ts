@@ -11,16 +11,6 @@ const cors = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 }
 
-/** Decode JWT payload (with base64url padding fix) */
-function jwtPayload(token: string): Record<string, unknown> {
-  try {
-    let part = token.split('.')[1] ?? ''
-    part = part.replace(/-/g, '+').replace(/_/g, '/')
-    while (part.length % 4 !== 0) part += '='
-    return JSON.parse(atob(part))
-  } catch { return {} }
-}
-
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
 
@@ -31,15 +21,21 @@ Deno.serve(async (req) => {
     const token = authHeader.replace('Bearer ', '').trim()
     if (!token) return new Response('Unauthorized', { status: 401, headers: cors })
 
-    // Extract user info from JWT claims (already verified by gateway)
-    const payload = jwtPayload(token)
-    const userId = payload.sub as string
-    if (!userId) return new Response('Unauthorized', { status: 401, headers: cors })
-
     const admin = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     )
+
+    // Der Token wird gegen Supabase geprueft, Signatur eingeschlossen.
+    //
+    // Vorher wurde hier nur der Payload base64-dekodiert, mit dem Kommentar
+    // "already verified by gateway". Das Gateway laeuft fuer diese Function aber
+    // mit --no-verify-jwt. Ein selbstgebauter Token mit fremdem "sub" haette
+    // damit eine Stripe-Billing-Portal-Sitzung fuer dessen Kunden geoeffnet:
+    // Abo, Rechnungen, Zahlungsmittel, Kuendigung.
+    const { data: authData, error: authErr } = await admin.auth.getUser(token)
+    const userId = authData?.user?.id
+    if (authErr || !userId) return new Response('Unauthorized', { status: 401, headers: cors })
 
     const { data } = await admin
       .from('stripe_customers')
