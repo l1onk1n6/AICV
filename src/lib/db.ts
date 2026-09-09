@@ -3,7 +3,7 @@
  * Alle Funktionen sind "best-effort" – Fehler werden geloggt aber nicht geworfen,
  * damit die App offline weiter funktioniert.
  */
-import { getSupabase, isSupabaseConfigured } from './supabase';
+import { getSupabase, getSharedSupabase, isSupabaseConfigured } from './supabase';
 import type { Person, Resume, UploadedDocument, ApplicationStatus } from '../types/resume';
 import type { Application } from '../store/trackerStore';
 
@@ -157,9 +157,9 @@ export async function uploadDocumentFile(doc: UploadedDocument, blob: Blob): Pro
 }
 
 /** Signierte URL fuer ein im Storage abgelegtes Dokument. */
-async function signedUrlFor(path: string): Promise<string | null> {
+async function signedUrlFor(path: string, client: ReturnType<typeof getSupabase> = sb()): Promise<string | null> {
   try {
-    const { data, error } = await sb().storage.from(DOCUMENTS_BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS);
+    const { data, error } = await client.storage.from(DOCUMENTS_BUCKET).createSignedUrl(path, SIGNED_URL_TTL_SECONDS);
     if (error) throw error;
     return data?.signedUrl ?? null;
   } catch (e) {
@@ -377,7 +377,12 @@ function rowToResume(row: Record<string, unknown>): Resume {
 export async function fetchSharedResume(token: string): Promise<Resume | null> {
   if (!isSupabaseConfigured()) return null;
   try {
-    const { data, error } = await sb()
+    // Dedizierter Client, der den Share-Token als Header mitschickt. Die RLS
+    // gibt die Zeile nur frei, wenn der Header exakt den share_token trifft —
+    // dadurch liefert diese Abfrage hoechstens die EINE zum Link gehoerende
+    // Mappe, niemals fremde. Der Filter unten bleibt als zweiter Riegel.
+    const shared = getSharedSupabase(token);
+    const { data, error } = await shared
       .from('resumes')
       .select('*')
       .eq('share_token', token)
@@ -389,14 +394,14 @@ export async function fetchSharedResume(token: string): Promise<Resume | null> {
     // Aufruf-Zaehler erhoehen — fire-and-forget, nicht blockierend.
     // RPC ist SECURITY DEFINER und damit auch fuer anon-Besucher erlaubt.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (sb() as any).rpc('increment_share_view', { token }).then(({ error: rpcErr }: { error: unknown }) => {
+    (shared as any).rpc('increment_share_view', { token }).then(({ error: rpcErr }: { error: unknown }) => {
       if (rpcErr) console.warn('[db] increment_share_view', rpcErr);
     });
 
-    // Dokumente des geteilten Resumes zusaetzlich laden (RLS erlaubt SELECT
-    // fuer Docs deren Resume einen share_token hat).
+    // Dokumente des geteilten Resumes zusaetzlich laden — ueber denselben
+    // header-gebundenen Client, damit die token-gebundene RLS-Policy greift.
     try {
-      const { data: docRows } = await sb()
+      const { data: docRows } = await shared
         .from('documents')
         .select('*')
         .eq('resume_id', resume.id)
@@ -408,7 +413,10 @@ export async function fetchSharedResume(token: string): Promise<Resume | null> {
         const base = rowToDocument(row);
         const path = (row.storage_path as string) || null;
         if (path) {
-          const url = await signedUrlFor(path);
+          // getSupabase() und getSharedSupabase() liefern nominal verschiedene
+          // createClient-Generics; fuer signedUrlFor (nutzt nur .storage) ist das
+          // egal, daher die Zusammenfuehrung des Typs.
+          const url = await signedUrlFor(path, shared as unknown as ReturnType<typeof getSupabase>);
           return { ...base, dataUrl: url ?? '' };
         }
         return base;
