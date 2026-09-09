@@ -113,6 +113,14 @@ export default function LandingPage() {
   const [showAuth, setShowAuth] = useState<false | 'login' | 'register'>(false);
   const [scrolled, setScrolled] = useState(false);
   const isMobile = useIsMobile();
+  // Eigener Breakpoint nur fuer die Kopfzeile: Logo + Menue + Auth-Block
+  // brauchen zusammen rund 890 px. Unterhalb 1024 px entfaellt das Menue,
+  // sonst bricht die Leiste zwischen 768 und 890 px um.
+  const isCompactNav = useIsMobile(1024);
+  // Unter 360 px (iPhone SE 1. Gen) reicht es auch ohne Badge und Sprachwahl
+  // nicht: dann entfaellt „Anmelden" in der Leiste. Der Weg bleibt offen —
+  // die Auth-Seite hat oben einen Umschalter Anmelden/Registrieren.
+  const isTinyNav = useIsMobile(360);
   const countdown = useCountdown(EARLYBIRD_DEADLINE);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -146,6 +154,35 @@ export default function LandingPage() {
 
   if (showAuth) return <AuthPage onBack={() => setShowAuth(false)} initialMode={showAuth} />;
 
+  // Sprach-Picker — DE als Default; Auswahl persistiert via localStorage.
+  // Steht auf dem Desktop in der Kopfzeile, auf dem Telefon in der Fusszeile:
+  // in der Kopfzeile ist dort kein Platz, ohne den Hauptknopf abzuschneiden.
+  const langPicker = (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: 3, borderRadius: 10, background: 'rgba(var(--rgb-fg),0.05)', border: '1px solid rgba(var(--rgb-fg),0.08)' }}>
+      {(['de', 'en'] as const).map(code => (
+        <button
+          key={code}
+          onClick={() => setLocale(code)}
+          aria-pressed={locale === code}
+          aria-label={code === 'de' ? 'Deutsch' : 'English'}
+          style={{
+            border: 'none', cursor: 'pointer',
+            fontSize: 12, fontWeight: 700, letterSpacing: '0.04em',
+            padding: '5px 10px', borderRadius: 8,
+            textTransform: 'uppercase',
+            background: locale === code ? 'rgba(0,122,255,0.18)' : 'transparent',
+            color: locale === code ? '#fff' : 'rgba(var(--rgb-fg),0.55)',
+            transition: 'background 0.15s, color 0.15s',
+          }}
+          onMouseEnter={e => { if (locale !== code) e.currentTarget.style.color = '#fff'; }}
+          onMouseLeave={e => { if (locale !== code) e.currentTarget.style.color = 'rgba(var(--rgb-fg),0.55)'; }}
+        >
+          {code}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <div
       ref={containerRef}
@@ -167,7 +204,7 @@ export default function LandingPage() {
       <nav style={{
         position: 'sticky', top: 0, zIndex: 100,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: isMobile ? '14px 20px' : '16px 48px',
+        padding: isMobile ? '14px 16px' : '16px 48px',
         background: scrolled ? 'rgba(8,15,30,0.92)' : 'rgba(8,15,30,0.55)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
@@ -178,11 +215,14 @@ export default function LandingPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }} onClick={() => containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}>
           <LogoIcon size={30} />
           <span style={{ fontWeight: 800, fontSize: 17, letterSpacing: '-0.3px' }}>PATH</span>
-          <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 7px', borderRadius: 99, background: 'rgba(0,122,255,0.2)', border: '1px solid rgba(0,122,255,0.35)', color: 'var(--ios-blue)', marginLeft: 2, whiteSpace: 'nowrap' }}>by pixmatic</span>
+          {/* Badge kostet 82 px und steht auf dem Telefon in der Fusszeile */}
+          {!isMobile && (
+            <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 7px', borderRadius: 99, background: 'rgba(0,122,255,0.2)', border: '1px solid rgba(0,122,255,0.35)', color: 'var(--ios-blue)', marginLeft: 2, whiteSpace: 'nowrap' }}>by pixmatic</span>
+          )}
         </div>
 
-        {/* Nav links – desktop only */}
-        {!isMobile && (
+        {/* Nav links – erst ab 1024 px, darunter fehlt die Breite */}
+        {!isCompactNav && (
           <div style={{ display: 'flex', gap: 32, fontSize: 14, color: 'rgba(var(--rgb-fg),0.65)' }}>
             {[['features', t('Features')], ['how', t("So funktioniert's")], ['pricing', t('Preise')]].map(([id, label]) => (
               <button key={id} onClick={() => scrollTo(id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit', padding: 0, transition: 'color 0.2s' }}
@@ -195,45 +235,25 @@ export default function LandingPage() {
         )}
 
         {/* Auth buttons */}
-        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-          {/* Sprach-Picker — DE als Default; Auswahl persistiert via localStorage */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: 3, borderRadius: 10, background: 'rgba(var(--rgb-fg),0.05)', border: '1px solid rgba(var(--rgb-fg),0.08)' }}>
-            {(['de', 'en'] as const).map(code => (
-              <button
-                key={code}
-                onClick={() => setLocale(code)}
-                aria-pressed={locale === code}
-                aria-label={code === 'de' ? 'Deutsch' : 'English'}
-                style={{
-                  border: 'none', cursor: 'pointer',
-                  fontSize: 12, fontWeight: 700, letterSpacing: '0.04em',
-                  padding: '5px 10px', borderRadius: 8,
-                  textTransform: 'uppercase',
-                  background: locale === code ? 'rgba(0,122,255,0.18)' : 'transparent',
-                  color: locale === code ? '#fff' : 'rgba(var(--rgb-fg),0.55)',
-                  transition: 'background 0.15s, color 0.15s',
-                }}
-                onMouseEnter={e => { if (locale !== code) e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={e => { if (locale !== code) e.currentTarget.style.color = 'rgba(var(--rgb-fg),0.55)'; }}
-              >
-                {code}
-              </button>
-            ))}
-          </div>
-          <button onClick={() => setShowAuth('login')} style={{
+        <div style={{ display: 'flex', gap: isMobile ? 8 : 10, alignItems: 'center' }}>
+          {!isMobile && langPicker}
+          {!isTinyNav && <button onClick={() => setShowAuth('login')} style={{
             background: 'none', border: 'none', cursor: 'pointer',
-            color: 'rgba(var(--rgb-fg),0.65)', fontSize: 14, padding: '8px 14px',
-            borderRadius: 10, transition: 'color 0.2s',
+            color: 'rgba(var(--rgb-fg),0.65)', fontSize: isMobile ? 13 : 14, padding: isMobile ? '8px 10px' : '8px 14px',
+            borderRadius: 10, transition: 'color 0.2s', whiteSpace: 'nowrap', flexShrink: 0,
           }}
             onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
             onMouseLeave={e => (e.currentTarget.style.color = 'rgba(var(--rgb-fg),0.65)')}>
             {t('Anmelden')}
-          </button>
+          </button>}
           <button onClick={() => setShowAuth('register')} style={{
             background: 'rgba(0,122,255,0.9)', border: 'none', cursor: 'pointer',
-            color: '#fff', fontSize: 14, fontWeight: 600,
-            padding: '9px 18px', borderRadius: 10,
+            color: '#fff', fontSize: isMobile ? 13 : 14, fontWeight: 600,
+            padding: isMobile ? '9px 13px' : '9px 18px', borderRadius: 10,
             transition: 'background 0.2s, transform 0.15s',
+            // Ohne nowrap bricht „Kostenlos starten" auf dem Telefon zweizeilig
+            // um und die Leiste wird 30 px hoeher.
+            whiteSpace: 'nowrap', flexShrink: 0,
           }}
             onMouseEnter={e => { e.currentTarget.style.background = '#007AFF'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,122,255,0.9)'; e.currentTarget.style.transform = 'none'; }}>
@@ -759,6 +779,9 @@ export default function LandingPage() {
               </button>
             ))}
           </div>
+
+          {/* Auf dem Telefon steht der Sprachumschalter hier statt in der Kopfzeile */}
+          {isMobile && langPicker}
 
           <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.25)' }}>
             © {new Date().getFullYear()} pixmatic. Alle Rechte vorbehalten.

@@ -126,7 +126,7 @@ export default function TranslateDialog({ onClose }: { onClose: () => void }) {
     <div style={{ position: 'fixed', inset: 0, zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}>
       <div className="glass-card animate-scale-in"
-        style={{ padding: '28px 24px', width: 360, maxWidth: '92vw', background: 'rgba(16,16,26,0.97)', backdropFilter: 'blur(32px)' }}
+        style={{ padding: '28px 24px', width: 360, maxWidth: '92vw', background: 'var(--bg-overlay)', backdropFilter: 'blur(32px)' }}
         onClick={e => e.stopPropagation()}>
 
         {/* Header */}

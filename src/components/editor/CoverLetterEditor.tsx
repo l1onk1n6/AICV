@@ -249,7 +249,7 @@ export default function CoverLetterEditor() {
           background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(8px)',
         }} onClick={() => setConfirmOverwrite(null)}>
           <div className="glass-card animate-scale-in"
-            style={{ padding: '28px 24px', width: 360, maxWidth: '92vw', background: 'rgba(16,16,26,0.97)' }}
+            style={{ padding: '28px 24px', width: 360, maxWidth: '92vw', background: 'var(--bg-overlay)' }}
             onClick={e => e.stopPropagation()}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(255,159,10,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>

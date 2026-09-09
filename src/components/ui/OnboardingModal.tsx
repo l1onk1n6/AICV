@@ -128,9 +128,9 @@ export default function OnboardingModal({ onClose }: Props) {
     }}>
       <div className="glass-card animate-scale-in" style={{
         width: '100%', maxWidth: 440, padding: '32px 28px',
-        background: 'rgba(16,16,28,0.98)',
+        background: 'var(--bg-overlay)',
         border: '1px solid rgba(var(--rgb-fg),0.1)',
-        boxShadow: '0 24px 60px rgba(0,0,0,0.6)',
+        boxShadow: 'var(--shadow-overlay)',
       }}>
 
         {/* Step 0: Welcome */}

@@ -135,11 +135,14 @@ export default function Tracker() {
             {applications.length} Bewerbung{applications.length !== 1 ? 'en' : ''} total
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 8, flexShrink: 0, flexWrap: 'wrap' }}>
-          <button className="btn-glass" onClick={() => setShowImportModal(true)} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        {/* Auf dem Telefon untereinander und volle Breite: nebeneinander wird
+            „Bewerbung hinzufügen" bei 390 px um 28 px abgeschnitten, und der
+            Container laesst sich nicht seitlich scrollen. */}
+        <div style={{ display: 'flex', gap: 8, flexShrink: 0, flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row', width: isMobile ? '100%' : 'auto' }}>
+          <button className="btn-glass" onClick={() => setShowImportModal(true)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
             <Link size={18} /> Aus Mappe
           </button>
-          <button className="btn-glass btn-primary" onClick={addApplication} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <button className="btn-glass btn-primary" onClick={addApplication} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
             <Plus size={18} /> Bewerbung hinzufügen
           </button>
         </div>
