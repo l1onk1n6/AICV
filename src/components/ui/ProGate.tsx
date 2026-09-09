@@ -66,7 +66,7 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
         className="glass-card animate-scale-in"
         style={{
           padding: '28px 24px', width: 660, maxWidth: '92vw', maxHeight: '88vh', overflow: 'auto',
-          background: 'rgba(16, 16, 26, 0.97)',
+          background: 'var(--bg-overlay)',
           backdropFilter: 'blur(32px) saturate(1.6)',
           WebkitBackdropFilter: 'blur(32px) saturate(1.6)',
         }}
@@ -107,7 +107,7 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
                     flex: 1, padding: '8px 12px', borderRadius: 8, border: 'none', cursor: 'pointer',
                     fontSize: 13, fontWeight: 600, transition: 'all 0.15s',
                     background: active ? 'linear-gradient(135deg, rgba(255,159,10,0.35), rgba(255,55,95,0.28))' : 'transparent',
-                    color: active ? '#fff' : 'rgba(var(--rgb-fg),0.45)',
+                    color: active ? 'rgba(var(--rgb-fg),0.95)' : 'rgba(var(--rgb-fg),0.45)',
                     boxShadow: active ? '0 2px 8px rgba(0,0,0,0.25)' : 'none',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
                   }}

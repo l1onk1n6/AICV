@@ -86,14 +86,14 @@ export function CustomSelect({ value, onChange, options, style, placeholder = 'A
       role="listbox"
       style={{
         ...dropdownStyle,
-        background: 'rgba(16,16,30,0.97)',
+        background: 'var(--bg-overlay)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         border: '1px solid rgba(var(--rgb-fg),0.15)',
         borderRadius: 10,
         overflow: 'auto',
         maxHeight: 260,
-        boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+        boxShadow: 'var(--shadow-dropdown)',
       }}
     >
       {options.map((opt) => {
@@ -120,7 +120,9 @@ export function CustomSelect({ value, onChange, options, style, placeholder = 'A
               margin: '2px 4px',
               borderRadius: 7,
               transition: 'background 0.1s',
-              color: isSelected ? '#fff' : 'rgba(var(--rgb-fg),0.85)',
+              // Kein festes Weiss: der ausgewaehlte Eintrag steht auf einer nur
+              // leicht blau getoenten Flaeche und waere im Hellmodus unsichtbar.
+              color: isSelected ? 'rgba(var(--rgb-fg),0.95)' : 'rgba(var(--rgb-fg),0.85)',
             }}
             onMouseEnter={(e) => {
               if (!isSelected) (e.currentTarget as HTMLDivElement).style.background = 'rgba(var(--rgb-fg),0.08)';

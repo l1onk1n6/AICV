@@ -35,6 +35,11 @@
   --bg-card: #16161a;
   --bg-card-hover: #1a1a20;
   --bg-input: #1c1c20;
+  /* Modale Ebene (Dialoge, Dropdowns). Eigenes Token, weil diese Flaechen
+     ueber der Seite schweben und deshalb dichter sind als eine Karte. */
+  --bg-overlay: rgba(16, 16, 28, 0.97);
+  --shadow-overlay: 0 24px 60px rgba(0, 0, 0, 0.6);
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.5);
   --bg-btn: rgba(255, 255, 255, 0.05);
   --bg-btn-hover: rgba(255, 255, 255, 0.09);
   --border-default: rgba(255, 255, 255, 0.08);
@@ -55,6 +60,9 @@ body.theme-light {
   --bg-card: #ffffff;
   --bg-card-hover: #f7f7f5;
   --bg-input: #ffffff;
+  --bg-overlay: rgba(255, 255, 255, 0.98);
+  --shadow-overlay: 0 24px 60px rgba(0, 0, 0, 0.18);
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.12);
   --bg-btn: rgba(0, 0, 0, 0.04);
   --bg-btn-hover: rgba(0, 0, 0, 0.08);
   --border-default: rgba(0, 0, 0, 0.10);
@@ -172,6 +180,13 @@ body {
   background: linear-gradient(135deg, var(--ios-blue), var(--ios-indigo)) !important;
 }
 .btn-primary:hover { filter: brightness(1.15); }
+
+/* Gefuellte Knoepfe tragen immer weisse Schrift. .btn-glass setzt
+   rgba(var(--rgb-fg),.95) — im Hellmodus stuende sonst dunkler Text auf
+   saturiertem Blau/Rot/Gruen. Im Dunkelmodus ist es ohnehin schon weiss. */
+.btn-primary,
+.btn-danger,
+.btn-success { color: #fff; }
 
 .btn-danger {
   background: linear-gradient(135deg, var(--ios-red), var(--ios-pink)) !important;
