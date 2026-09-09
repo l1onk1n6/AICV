@@ -150,8 +150,9 @@ Deno.serve(async (req)=>{
     });
   } catch (e) {
     console.error('[track-view]', e);
+    // Interna bleiben im Log, nicht in der Antwort.
     return json({
-      error: String(e)
+      error: 'Internal error'
     }, 500);
   }
 });

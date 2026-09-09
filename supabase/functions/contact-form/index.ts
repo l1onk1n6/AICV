@@ -29,6 +29,12 @@ const CORS = {
   'Access-Control-Allow-Headers': 'authorization, content-type',
   'Access-Control-Max-Age': '86400'
 };
+// Zammad nimmt den Artikel als text/html entgegen. Vorher war nur `message`
+// maskiert — Name und Betreff gingen roh hinein und konnten Markup in das
+// Ticketsystem schreiben, das die Agenten selbst lesen.
+function esc(value) {
+  return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 const ZAMMAD_GROUP = 'Kunden';
 const RATE_LIMIT = 3 // max submissions
 ;
@@ -169,9 +175,9 @@ Deno.serve(async (req)=>{
     const customerEmail = email?.trim() || authUser.email || '';
     const ticketTitle = `${subject?.trim() || 'Kontaktanfrage'} – ${name.trim()}`;
     const articleBody = [
-      `<b>Name:</b> ${name.trim()}`,
-      customerEmail ? `<b>E-Mail:</b> ${customerEmail}` : '',
-      `<b>Betreff:</b> ${subject?.trim() || '—'}`,
+      `<b>Name:</b> ${esc(name.trim())}`,
+      customerEmail ? `<b>E-Mail:</b> ${esc(customerEmail)}` : '',
+      `<b>Betreff:</b> ${esc(subject?.trim() || '—')}`,
       '<br>',
       message.trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>')
     ].filter(Boolean).join('<br>');

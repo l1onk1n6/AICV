@@ -13,16 +13,23 @@ Deno.serve(async (req) => {
     return new Response('ok', { headers: CORS })
   }
 
-  // Decode JWT manually
-  const token = (req.headers.get('Authorization') ?? '').replace('Bearer ', '')
-  let userId: string
-  try {
-    let part = token.split('.')[1]
-    while (part.length % 4 !== 0) part += '='
-    const payload = JSON.parse(atob(part))
-    userId = payload.sub
-    if (!userId) throw new Error('no sub')
-  } catch {
+  const admin = createClient(
+    Deno.env.get('SUPABASE_URL')!,
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+  )
+
+  // Token gegen Supabase pruefen, Signatur eingeschlossen.
+  //
+  // Vorher wurde der Payload nur base64-dekodiert. Da das Gateway fuer diese
+  // Function mit --no-verify-jwt laeuft, konnte jeder mit einem selbstgebauten
+  // Token Empfehlungen auf ein beliebiges Konto buchen — und an der Empfehlung
+  // haengt eine Gutschrift.
+  const token = (req.headers.get('Authorization') ?? '').replace('Bearer ', '').trim()
+  const { data: authData } = token
+    ? await admin.auth.getUser(token)
+    : { data: null }
+  const userId = authData?.user?.id
+  if (!userId) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
       status: 401, headers: { ...CORS, 'Content-Type': 'application/json' },
     })
@@ -36,11 +43,6 @@ Deno.serve(async (req) => {
       status: 200, headers: { ...CORS, 'Content-Type': 'application/json' },
     })
   }
-
-  const admin = createClient(
-    Deno.env.get('SUPABASE_URL')!,
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
-  )
 
   // Verify referrer exists
   const { data: referrerData } = await admin.auth.admin.getUserById(referrer_id)

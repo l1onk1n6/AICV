@@ -106,8 +106,9 @@ Deno.serve(async (req)=>{
     });
   } catch (e) {
     console.error('[get-shared-docs]', e);
+    // Interna bleiben im Log, nicht in der Antwort.
     return json({
-      error: String(e)
+      error: 'Internal error'
     }, 500);
   }
 });

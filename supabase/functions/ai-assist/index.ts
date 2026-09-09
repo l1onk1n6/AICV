@@ -1,22 +1,32 @@
 // Secrets required: ANTHROPIC_API_KEY
 // JWT enforcement: OFF (manual check below handles auth)
 
+import { createClient } from 'npm:@supabase/supabase-js@2'
+
 const cors = {
   'Access-Control-Allow-Origin':  '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 }
 
-/** Decode JWT payload without verifying signature (gateway already on HTTPS) */
-function jwtPayload(token: string): Record<string, unknown> {
-  try {
-    let part = token.split('.')[1] ?? ''
-    part = part.replace(/-/g, '+').replace(/_/g, '/')
-    while (part.length % 4 !== 0) part += '='
-    return JSON.parse(atob(part))
-  } catch {
-    return {}
-  }
+/**
+ * Prueft den Supabase-JWT des Aufrufers — Signatur eingeschlossen.
+ *
+ * Vorher wurde hier nur der Payload base64-dekodiert und auf ein vorhandenes
+ * "sub" geprueft. Der Kommentar dazu nahm an, das Gateway habe bereits geprueft;
+ * fuer diese Function laeuft das Gateway aber mit --no-verify-jwt. Ein
+ * selbstgebauter Token ohne gueltige Signatur kam damit durch und liess Claude
+ * auf Rechnung des Projekts laufen.
+ */
+async function verifiedUserId(token: string): Promise<string | null> {
+  if (!token) return null
+  const admin = createClient(
+    Deno.env.get('SUPABASE_URL')!,
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+  )
+  const { data, error } = await admin.auth.getUser(token)
+  if (error || !data?.user) return null
+  return data.user.id
 }
 
 async function callClaude(prompt: string, maxTokens = 2048): Promise<string> {
@@ -45,11 +55,11 @@ Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
 
   try {
-    // Manual auth: decode JWT payload and verify user ID exists
+    // Manual auth: verify the JWT signature against Supabase, not just its payload
     const authHeader = req.headers.get('Authorization') ?? ''
     const token = authHeader.replace(/^Bearer\s+/i, '').trim()
-    const payload = token ? jwtPayload(token) : {}
-    if (!payload.sub) {
+    const userId = await verifiedUserId(token)
+    if (!userId) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401, headers: { ...cors, 'Content-Type': 'application/json' },
       })
