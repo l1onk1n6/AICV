@@ -43,3 +43,18 @@ export function getSupabase() {
 export function resetSupabaseClient() {
   _client = null;
 }
+
+// Client fuer den oeffentlichen Share-Zugriff: sendet den Share-Token als
+// 'x-share-token'-Header mit. Die RLS-Policies auf resumes/documents/storage
+// geben eine geteilte Mappe NUR frei, wenn dieser Header exakt den share_token
+// der Zeile trifft — damit kann ein Anonymer nicht mehr alle geteilten Mappen
+// auslesen, sondern ausschliesslich die zu seinem Link gehoerende.
+// Kein persistSession: dieser Client haelt keine Anmeldung.
+export function getSharedSupabase(shareToken: string) {
+  const { url, key } = getConfig();
+  if (!url || !key) throw new Error(tr('Supabase nicht konfiguriert'));
+  return createClient(url, key, {
+    global: { headers: { 'x-share-token': shareToken } },
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+}
