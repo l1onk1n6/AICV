@@ -111,36 +111,21 @@ Deno.serve(async (req)=>{
     if (!link) return json({
       error: 'not found'
     }, 404);
-    // Geo: prefer Cloudflare header, fallback to ip-api (free, 45 req/min)
-    let country;
-    let countryCode;
-    let city;
+    // Geo: ausschliesslich der Cloudflare-Header. Der fruehere Fallback auf
+    // ip-api.com ist ersatzlos entfallen — er hat die Besucher-IP unverschlues-
+    // selt (http, HTTPS nur im Bezahltarif) an einen Dritten geschickt.
+    // Ohne brauchbaren Header gilt der Standardwert; Stadt wird nicht mehr
+    // ermittelt.
+    const DEFAULT_COUNTRY_CODE = 'DE';
     const cfCountry = req.headers.get('cf-ipcountry');
-    if (cfCountry && cfCountry !== 'XX') {
-      countryCode = cfCountry;
-    } else {
-      const forwardedIp = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
-      if (forwardedIp && forwardedIp !== '::1' && !forwardedIp.startsWith('127.') && !forwardedIp.startsWith('192.168.')) {
-        try {
-          const res = await fetch(`http://ip-api.com/json/${forwardedIp}?fields=status,country,countryCode,city`, {
-            signal: AbortSignal.timeout(2000)
-          });
-          const geo = await res.json();
-          if (geo.status === 'success') {
-            country = geo.country;
-            countryCode = geo.countryCode;
-            city = geo.city;
-          }
-        } catch  {}
-      }
-    }
+    const countryCode = cfCountry && cfCountry !== 'XX' ? cfCountry : DEFAULT_COUNTRY_CODE;
     const ua = req.headers.get('user-agent') ?? '';
     const referrer = req.headers.get('referer') ?? undefined;
     const { data: view } = await sb.from('resume_views').insert({
       share_link_id: link.id,
-      country: country ?? null,
-      country_code: countryCode ?? null,
-      city: city ?? null,
+      country: null,
+      country_code: countryCode,
+      city: null,
       device: parseDevice(ua),
       browser: parseBrowser(ua),
       referrer: referrer ?? null
