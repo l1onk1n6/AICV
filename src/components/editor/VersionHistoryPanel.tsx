@@ -84,7 +84,7 @@ export default function VersionHistoryPanel({ resumeId }: Props) {
           </div>
           <div>
             <h2 style={{ margin: 0, fontSize: 17, fontWeight: 700 }}>{t('Versionshistorie')}</h2>
-            <p style={{ margin: 0, fontSize: 12, color: 'rgba(var(--rgb-fg),0.4)', marginTop: 2 }}>
+            <p style={{ margin: 0, fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>
               {t('Bis zu 20 gespeicherte Versionen pro Mappe')}
             </p>
           </div>
@@ -96,9 +96,9 @@ export default function VersionHistoryPanel({ resumeId }: Props) {
         <div style={{
           display: 'flex', alignItems: 'flex-start', gap: 8, padding: '10px 12px',
           background: 'rgba(255,59,48,0.12)', border: '1px solid rgba(255,59,48,0.3)',
-          borderRadius: 10, marginBottom: 16, fontSize: 12, color: 'rgba(var(--rgb-fg),0.75)',
+          borderRadius: 10, marginBottom: 16, fontSize: 12, color: 'var(--text-2)',
         }}>
-          <AlertCircle size={14} style={{ color: '#FF3B30', flexShrink: 0, marginTop: 1 }} />
+          <AlertCircle size={14} style={{ color: 'var(--ios-red)', flexShrink: 0, marginTop: 1 }} />
           <span>{error}</span>
         </div>
       )}
@@ -117,7 +117,7 @@ export default function VersionHistoryPanel({ resumeId }: Props) {
               style={{ flex: 1, fontSize: 13 }}
             />
             <button className="btn-glass btn-sm btn-primary" onClick={handleSave} disabled={saving} style={{ gap: 5, flexShrink: 0 }}>
-              {saving ? <Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} /> : <Plus size={12} />}
+              {saving ? <Loader2 data-motion="essential" size={12} style={{ animation: 'spin 1s linear infinite' }} /> : <Plus size={12} />}
               {t('Speichern')}
             </button>
             <button className="btn-glass btn-sm" onClick={() => setShowLabel(false)} style={{ flexShrink: 0 }}>
@@ -137,11 +137,11 @@ export default function VersionHistoryPanel({ resumeId }: Props) {
 
       {/* Version list */}
       {loading ? (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, gap: 8, color: 'rgba(var(--rgb-fg),0.3)', fontSize: 13 }}>
-          <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> {t('Lädt…')}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, gap: 8, color: 'var(--text-4)', fontSize: 13 }}>
+          <Loader2 data-motion="essential" size={16} style={{ animation: 'spin 1s linear infinite' }} /> {t('Lädt…')}
         </div>
       ) : versions.length === 0 && !error ? (
-        <div style={{ textAlign: 'center', padding: '40px 20px', color: 'rgba(var(--rgb-fg),0.3)' }}>
+        <div style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-4)' }}>
           <Clock size={32} style={{ margin: '0 auto 12px', opacity: 0.4 }} />
           <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 6 }}>{t('Noch keine Versionen gespeichert')}</div>
           <div style={{ fontSize: 12 }}>{t('Speichere manuell eine Version um Änderungen festzuhalten.')}</div>
@@ -161,17 +161,17 @@ export default function VersionHistoryPanel({ resumeId }: Props) {
                 border: i === 0 ? '1px solid rgba(0,122,255,0.3)' : '1px solid rgba(var(--rgb-fg),0.08)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 11, fontWeight: 700,
-                color: i === 0 ? 'var(--ios-blue)' : 'rgba(var(--rgb-fg),0.4)',
+                color: i === 0 ? 'var(--ios-blue)' : 'var(--text-4)',
               }}>
                 {versions.length - i}
               </div>
 
               {/* Info */}
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: v.label ? 600 : 400, color: v.label ? '#fff' : 'rgba(var(--rgb-fg),0.65)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <div style={{ fontSize: 13, fontWeight: v.label ? 600 : 400, color: v.label ? 'var(--text-1)' : 'var(--text-3)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {v.label ?? t('Version')}
                 </div>
-                <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.35)', marginTop: 2 }}>
+                <div style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 2 }}>
                   {relativeTime(v.created_at)} · {new Date(v.created_at).toLocaleString('de-CH', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
@@ -187,7 +187,7 @@ export default function VersionHistoryPanel({ resumeId }: Props) {
                       style={{ fontSize: 11, gap: 4, background: 'rgba(0,122,255,0.2)', border: '1px solid rgba(0,122,255,0.4)' }}
                     >
                       {restoring === v.id
-                        ? <Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} />
+                        ? <Loader2 data-motion="essential" size={12} style={{ animation: 'spin 1s linear infinite' }} />
                         : <RotateCcw size={12} />}
                       {t('Bestätigen')}
                     </button>

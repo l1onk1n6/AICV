@@ -48,14 +48,14 @@ export default function SetupPage() {
         <h1 style={{ textAlign: 'center', fontSize: 22, fontWeight: 700, margin: '0 0 8px', letterSpacing: '-0.4px' }}>
           {t('Supabase konfigurieren')}
         </h1>
-        <p style={{ textAlign: 'center', color: 'rgba(var(--rgb-fg),0.5)', fontSize: 14, marginBottom: 28, lineHeight: 1.5 }}>
+        <p style={{ textAlign: 'center', color: 'var(--text-4)', fontSize: 14, marginBottom: 28, lineHeight: 1.5 }}>
           {t('Verbinden Sie Ihr eigenes Supabase-Projekt für sichere Cloud-Synchronisation.')}
         </p>
 
         {/* Instructions */}
         <div className="glass-card" style={{ padding: '12px 16px', marginBottom: 24, borderRadius: 'var(--radius-sm)' }}>
           <div className="section-label" style={{ marginBottom: 8 }}>{t('So richten Sie Supabase ein')}</div>
-          <ol style={{ margin: 0, paddingLeft: 18, fontSize: 12, color: 'rgba(var(--rgb-fg),0.6)', lineHeight: 2 }}>
+          <ol style={{ margin: 0, paddingLeft: 18, fontSize: 12, color: 'var(--text-3)', lineHeight: 2 }}>
             <li>{t('Kostenloses Konto auf supabase.com erstellen')} (<a href="https://supabase.com" target="_blank" rel="noreferrer" style={{ color: 'var(--ios-blue)' }}>supabase.com</a>)</li>
             <li>{t('Neues Projekt anlegen')}</li>
             <li>{t('SQL Editor → schema.sql ausführen')} — <code style={{ background: 'rgba(var(--rgb-fg),0.1)', padding: '1px 5px', borderRadius: 4 }}>supabase/schema.sql</code></li>
@@ -96,7 +96,7 @@ export default function SetupPage() {
           <div style={{
             background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)',
             borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16,
-            fontSize: 13, color: '#ff6b6b', display: 'flex', alignItems: 'center', gap: 8,
+            fontSize: 13, color: 'var(--ios-red)', display: 'flex', alignItems: 'center', gap: 8,
           }}>
             <AlertCircle size={14} /> {validationError}
           </div>

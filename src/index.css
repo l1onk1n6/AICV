@@ -9,15 +9,43 @@
    rgba(var(--rgb-fg), X) genutzt fuer alpha-getintete Texte/Borders.
    ══════════════════════════════════════════════ */
 :root {
-  --ios-blue: #007AFF;
+  /* iOS-Systemfarben. Diese Werte sind fuer dunkle Flaechen gemacht; auf der
+     hellen Seite erreichen sie als Textfarbe nur 2,0–3,8:1 (gemessen 10.09.:
+     Blau 3,8 · Orange 2,0 · Gruen 2,1 · Rot 3,4). Deshalb stehen unter
+     body.theme-light dunklere Varianten derselben Farbtoene — der
+     Dunkelmodus bleibt unveraendert.
+     Zwei Ausnahmen: Blau und Violett sind auch im Dunkelmodus nachgezogen,
+     weil #007AFF auf der Karte #16161a nur 4,49:1 erreichte und #AF52DE
+     4,37:1 — beide knapp unter AA. */
+  --ios-blue: #0A84FF;      /* Apples Dark-Mode-Blau, 4,95:1 auf der Karte */
   --ios-blue-light: #4DA3FF;
   --ios-indigo: #5856D6;
-  --ios-purple: #AF52DE;
+  --ios-purple: #BE6BE8;    /* 5,55:1 auf der Karte */
   --ios-pink: #FF2D55;
   --ios-red: #FF3B30;
   --ios-orange: #FF9500;
   --ios-green: #34C759;
   --ios-teal: #5AC8FA;
+
+  /* Amber-Ton der Pro-Hinweise. Stand bisher an ~40 Stellen als #FF9F0A
+     im Quelltext — auf Weiss 2,0:1. */
+  --ios-amber: #FF9F0A;
+
+  /* Fuellfarben fuer gefuellte Knoepfe. Getrennt von den Textfarben, weil
+     die Anforderungen entgegengesetzt sind: Text braucht Abstand zur
+     dunklen Flaeche, eine Fuellung Abstand zur weissen Schrift darauf.
+     Alle Werte tragen weisse Schrift mit >= 4,6:1 und sind in beiden Themes
+     gleich — ein gefuellter Knopf sieht ueberall gleich aus.
+     Vorher im Dunkelmodus: Blau 4,02:1, Rot 3,55:1, Gruen 2,22:1. */
+  --fill-blue: #0071EC;
+  --fill-indigo: #5856D6;
+  --fill-red: #EA0C00;
+  --fill-pink: #EB002D;
+  --fill-green: #23863C;
+  --fill-teal: #057CB3;
+
+  /* Fokusring. Muss auf Seiten- UND Knopfhintergrund sichtbar sein. */
+  --focus-ring: #4DA3FF;
 
   --font-sf: -apple-system, "SF Pro Display", "SF Pro Text", BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
@@ -50,10 +78,46 @@
   --shadow-glass: 0 4px 16px rgba(0, 0, 0, 0.25);
   --shadow-btn: 0 1px 2px rgba(0, 0, 0, 0.25);
   --shadow-btn-hover: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+  /* ─── Textfarben-Leiter ───
+     Bis 10.09. stand an rund 230 Stellen direkt rgba(var(--rgb-fg), 0.2 … 0.95).
+     Die Alphawerte waren fuer den Dunkelmodus gewaehlt. Im Hellmodus
+     (Vordergrund 28,28,30 auf 250,250,247) reisst alles unter 0,61 die
+     AA-Schwelle von 4,5:1 — gemessen am 10.09.: Fusszeile 1,51:1,
+     Fliesstext im Willkommens-Modal 3,29:1.
+     Die vier Stufen halten beide Modi ueber 4,5:1. Die Dunkelwerte sind so
+     gesetzt, dass keine Stelle schlechter wird als vorher (hoechster
+     bisheriger Wert je Stufe): 0,95 / 0,80 / 0,65 / 0,50. */
+  --text-1: rgba(var(--rgb-fg), 0.95);   /* Titel, Primaertext   dunkel 17,6:1 */
+  --text-2: rgba(var(--rgb-fg), 0.80);   /* Sekundaertext        dunkel 12,5:1 */
+  --text-3: rgba(var(--rgb-fg), 0.65);   /* gedaempft            dunkel  8,4:1 */
+  --text-4: rgba(var(--rgb-fg), 0.50);   /* schwach, Fusszeilen  dunkel  5,3:1 */
 }
 
 body.theme-light {
   --rgb-fg: 28, 28, 30;
+
+  /* Dunklere Varianten derselben Farbtoene, gerechnet auf >= 4,8:1 gegen den
+     Seitenhintergrund #fafaf7 (Hue und Saettigung bleiben, nur die
+     Helligkeit sinkt). Weisse Schrift auf gefuellten Knoepfen gewinnt
+     dadurch mit: aus 4,02:1 werden 5,02:1. */
+  --ios-blue: #006BE0;
+  --ios-blue-light: #006BDE;
+  --ios-indigo: #5856D6;   /* unveraendert, erreicht bereits 5,40:1 */
+  --ios-purple: #A43AD9;
+  --ios-pink: #DF002A;
+  --ios-red: #DE0C00;
+  --ios-orange: #A25F00;
+  --ios-green: #217F39;
+  --ios-teal: #0576A9;
+  --ios-amber: #9F6100;
+  --focus-ring: #006BDE;
+
+  --text-1: rgba(var(--rgb-fg), 0.95);   /* 14,3:1 */
+  --text-2: rgba(var(--rgb-fg), 0.84);   /* 10,0:1 */
+  --text-3: rgba(var(--rgb-fg), 0.74);   /*  7,1:1 */
+  --text-4: rgba(var(--rgb-fg), 0.64);   /*  5,0:1 */
+
   --rgb-bg: 250, 250, 247;
   --bg-page: #fafaf7;
   --bg-glass: rgba(0, 0, 0, 0.03);
@@ -75,7 +139,128 @@ body.theme-light {
   --shadow-btn-hover: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
+/* ─── Fest dunkler Bereich ───
+   Die Startseite ist unabhaengig vom App-Theme immer dunkel. Sie hat dafuer
+   bisher --rgb-fg inline ueberschrieben. Das reicht seit der Textfarben-Leiter
+   nicht mehr: --text-1 … --text-4 werden schon auf <body> aufgeloest und
+   erben danach als fertige Farbe — eine spaetere Aenderung von --rgb-fg
+   erreicht sie nicht mehr. Deshalb setzt dieser Scope beide Ebenen. */
+.force-dark {
+  --rgb-fg: 255, 255, 255;
+  --rgb-bg: 12, 12, 14;
+  --text-1: rgba(255, 255, 255, 0.95);
+  --text-2: rgba(255, 255, 255, 0.80);
+  --text-3: rgba(255, 255, 255, 0.65);
+  --text-4: rgba(255, 255, 255, 0.50);
+  --ios-blue: #0A84FF;
+  --ios-blue-light: #4DA3FF;
+  --ios-indigo: #5856D6;
+  --ios-purple: #BE6BE8;
+  --ios-pink: #FF2D55;
+  --ios-red: #FF3B30;
+  --ios-orange: #FF9500;
+  --ios-green: #34C759;
+  --ios-teal: #5AC8FA;
+  --ios-amber: #FF9F0A;
+  --focus-ring: #4DA3FF;
+}
+
 * { box-sizing: border-box; }
+
+/* ─── Tastaturfokus ───
+   Bis 10.09. hatte die App keine sichtbare Fokusmarkierung: .btn-glass und
+   .input-glass setzen outline:none, ausserhalb dieser Klassen erbte nichts
+   einen Ring. Gemessen wurde am 09.09. mit Fokussieren jedes bedienbaren
+   Elements: Editor 23 von 36, Konto 17/30, Vorschau 13/20, Dashboard 12/17,
+   Tracker 11/35 ohne jede Markierung.
+   :focus-visible greift nur bei Tastatur- und Programmfokus, nicht beim
+   Klicken mit der Maus — die Optik im Mausbetrieb bleibt unveraendert.
+   Die Selektoren sind bewusst einzeln notiert: `button:focus-visible` hat
+   0,1,1 und schlaegt damit `.btn-glass { outline: none }` (0,1,0). */
+a[href]:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible,
+[role="button"]:focus-visible,
+[role="option"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="menuitem"]:focus-visible,
+[role="switch"]:focus-visible,
+[role="checkbox"]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ─── Bewegung reduzieren ───
+   Ueber alle Stilregeln der ausgelieferten Seite fand sich am 09.09. keine
+   einzige prefers-reduced-motion-Bedingung, waehrend die App durchgehend
+   animiert (gemessen: 3 Animationen, 28 Transitions allein auf dem
+   Dashboard — identisch mit und ohne gesetzte Praeferenz).
+   Ladeanzeigen sind ausgenommen: ein eingefrorener Spinner sieht aus wie
+   eine haengende App. Sie tragen data-motion="essential". */
+@media (prefers-reduced-motion: reduce) {
+  *:not([data-motion="essential"]),
+  *:not([data-motion="essential"])::before,
+  *:not([data-motion="essential"])::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+  html, body, * { scroll-behavior: auto !important; }
+}
+
+/* ─── Trefferflaechen auf Touch-Geraeten ───
+   Bei 390 x 844 gemessen (09.09.): Tracker 27, Konto 19, Editor 16 Elemente
+   unter 44 px. Die Ursache ist fast immer die Hoehe, nicht die Breite —
+   .btn-glass kommt mit 10 px Innenabstand auf 36 px.
+   Nur (pointer: coarse), damit die Maus-Oberflaeche unveraendert bleibt. */
+@media (pointer: coarse) {
+  .btn-glass:not(.btn-icon) {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .input-glass {
+    min-height: 44px;
+  }
+  /* iOS zoomt beim Antippen in jedes Feld unter 16 px hinein. Genau dagegen
+     stand bis zum 10.09. maximum-scale=1.0 im Viewport — und schaltete damit
+     auch das absichtliche Vergroessern mit zwei Fingern ab.
+     Der Zoom-Sperre wird hier die Ursache entzogen: .input-glass traegt seit
+     April 16 px, aber ueber zwanzig Felder ueberschreiben das inline mit
+     10–14 px (Editor, Dialoge, Teilen-Feld). Inline-Stile schlagen jede
+     Regel ohne !important, deshalb steht es hier.
+     Nur (pointer: coarse) — am Schreibtisch bleiben die kompakten Groessen. */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+  /* Symbolknoepfe wachsen nicht: ein runder 44er Knopf mit 14-px-Symbol
+     wirkt klobig, und in der Kopfzeile der Startseite wuerde er den
+     gerade erst behobenen Beschnitt zurueckholen. Stattdessen ein
+     unsichtbares Overlay, das nur die Trefferflaeche vergroessert. */
+  .btn-icon,
+  .tap44 {
+    position: relative;
+  }
+  .btn-icon::after,
+  .tap44::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
 
 html, body, #root {
   height: 100%;
@@ -86,7 +271,7 @@ html, body, #root {
 body {
   font-family: var(--font-sf);
   background: var(--bg-page);
-  color: rgba(var(--rgb-fg), 0.95);
+  color: var(--text-1);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   transition: background-color 200ms ease-out, color 200ms ease-out;
@@ -152,7 +337,7 @@ body {
   background: var(--bg-btn);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-full);
-  color: rgba(var(--rgb-fg), 0.95);
+  color: var(--text-1);
   font-family: var(--font-sf);
   font-size: 15px;
   font-weight: 500;
@@ -177,7 +362,7 @@ body {
 .btn-nav:active { transform: scale(0.98); }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--ios-blue), var(--ios-indigo)) !important;
+  background: linear-gradient(135deg, var(--fill-blue), var(--fill-indigo)) !important;
 }
 .btn-primary:hover { filter: brightness(1.15); }
 
@@ -189,11 +374,11 @@ body {
 .btn-success { color: #fff; }
 
 .btn-danger {
-  background: linear-gradient(135deg, var(--ios-red), var(--ios-pink)) !important;
+  background: linear-gradient(135deg, var(--fill-red), var(--fill-pink)) !important;
 }
 
 .btn-success {
-  background: linear-gradient(135deg, var(--ios-green), var(--ios-teal)) !important;
+  background: linear-gradient(135deg, var(--fill-green), var(--fill-teal)) !important;
 }
 
 .btn-sm { padding: 7px 14px; font-size: 13px; }
@@ -206,14 +391,14 @@ body {
   background: var(--bg-input);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
-  color: rgba(var(--rgb-fg), 0.95);
+  color: var(--text-1);
   font-family: var(--font-sf);
   font-size: 16px; /* 16px verhindert Auto-Zoom auf iOS */
   transition: border-color 150ms ease-out, box-shadow 150ms ease-out, background 150ms ease-out;
   outline: none;
 }
 
-.input-glass::placeholder { color: rgba(var(--rgb-fg), 0.35); }
+.input-glass::placeholder { color: var(--text-4); }
 
 .input-glass:focus {
   background: var(--bg-input);
@@ -240,7 +425,7 @@ select.input-glass { color-scheme: dark; }
 body.theme-light select.input-glass { color-scheme: light; }
 select.input-glass option {
   background: var(--bg-card);
-  color: rgba(var(--rgb-fg), 0.95);
+  color: var(--text-1);
 }
 select.input-glass option:checked,
 select.input-glass option:hover {
@@ -333,7 +518,7 @@ input[type="month"].input-glass::-webkit-calendar-picker-indicator:hover {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(var(--rgb-fg), 0.45);
+  color: var(--text-4);
   margin-bottom: 8px;
 }
 
@@ -352,7 +537,7 @@ input[type="month"].input-glass::-webkit-calendar-picker-indicator:hover {
   border-radius: var(--radius-full);
   font-size: 11px;
   font-weight: 500;
-  color: rgba(var(--rgb-fg), 0.8);
+  color: var(--text-2);
 }
 
 /* ─── Drag & Drop ─── */

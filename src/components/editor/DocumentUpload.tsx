@@ -92,9 +92,9 @@ export default function DocumentUpload() {
     <div className="animate-fade-in">
       {/* Storage bar */}
       <div style={{ marginBottom: 16 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)', marginBottom: 5 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--text-4)', marginBottom: 5 }}>
           <span>{t('Speicher')}</span>
-          <span style={{ color: storageFullPct >= 1 ? 'var(--ios-red)' : storageFullPct >= 0.8 ? '#FF9F0A' : 'rgba(var(--rgb-fg),0.4)' }}>
+          <span style={{ color: storageFullPct >= 1 ? 'var(--ios-red)' : storageFullPct >= 0.8 ? 'var(--ios-amber)' : 'var(--text-4)' }}>
             {formatBytes(totalUsedBytes)} / {limits.documentsMb} MB
           </span>
         </div>
@@ -117,7 +117,7 @@ export default function DocumentUpload() {
       >
         <input {...getInputProps()} />
         {uploadingCount > 0 ? (
-          <Loader2 size={28} style={{ margin: '0 auto 10px', display: 'block', animation: 'spin 1s linear infinite', color: 'var(--ios-blue)' }} />
+          <Loader2 data-motion="essential" size={28} style={{ margin: '0 auto 10px', display: 'block', animation: 'spin 1s linear infinite', color: 'var(--ios-blue)' }} />
         ) : (
           <Upload size={28} style={{ margin: '0 auto 10px', display: 'block', opacity: isDragActive ? 1 : 0.5 }} />
         )}
@@ -126,7 +126,7 @@ export default function DocumentUpload() {
             ? (uploadingCount === 1 ? t('Lädt {n} Datei hoch…') : t('Lädt {n} Dateien hoch…')).replace('{n}', String(uploadingCount))
             : storageFull ? t('Speicher voll') : isDragActive ? t('Dateien hier ablegen...') : t('Dokumente hochladen')}
         </div>
-        <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.4)' }}>
+        <div style={{ fontSize: 12, color: 'var(--text-4)' }}>
           {storageFull
             ? `Limit von ${limits.documentsMb} MB erreicht — Dateien löschen um Platz zu schaffen`
             : `Dateien hierher ziehen oder klicken · PDF, Bilder, Word · max. ${MAX_FILE_MB} MB`}
@@ -141,7 +141,7 @@ export default function DocumentUpload() {
 
       {/* Uploaded files */}
       {documents.length === 0 && (
-        <div style={{ padding: '14px 16px', textAlign: 'center', color: 'rgba(var(--rgb-fg),0.4)', fontSize: 12, borderTop: '1px dashed rgba(var(--rgb-fg),0.08)', marginTop: 4 }}>
+        <div style={{ padding: '14px 16px', textAlign: 'center', color: 'var(--text-4)', fontSize: 12, borderTop: '1px dashed rgba(var(--rgb-fg),0.08)', marginTop: 4 }}>
           <File size={18} style={{ marginBottom: 4, opacity: 0.4, display: 'block', margin: '0 auto 4px' }} />
           Keine Dokumente hochgeladen — zieh Dateien in die Dropzone oben.
         </div>
@@ -192,7 +192,7 @@ export default function DocumentUpload() {
                 <div style={{ fontWeight: 500, fontSize: 13, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {doc.name}
                 </div>
-                <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)', marginTop: 2 }}>
+                <div style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 2 }}>
                   {formatBytes(doc.size)} · {new Date(doc.uploadedAt).toLocaleDateString('de-DE')}
                 </div>
               </div>
@@ -233,7 +233,7 @@ export default function DocumentUpload() {
 
       {/* Used MB info across all resumes */}
       {resumes.length > 1 && (
-        <div style={{ marginTop: 10, fontSize: 11, color: 'rgba(var(--rgb-fg),0.25)', textAlign: 'center' }}>
+        <div style={{ marginTop: 10, fontSize: 11, color: 'var(--text-4)', textAlign: 'center' }}>
           Speicher gilt für alle {resumes.length} Mappen zusammen
         </div>
       )}

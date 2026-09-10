@@ -45,7 +45,7 @@ export default function ShortcutsHelp({ shortcuts, onClose }: Props) {
             onClick={onClose}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              color: 'rgba(var(--rgb-fg), 0.5)', padding: 4, display: 'flex',
+              color: 'var(--text-4)', padding: 4, display: 'flex',
             }}
           >
             <X size={18} />
@@ -62,7 +62,7 @@ export default function ShortcutsHelp({ shortcuts, onClose }: Props) {
                 fontSize: 13,
               }}
             >
-              <span style={{ color: 'rgba(var(--rgb-fg), 0.85)' }}>{sc.description}</span>
+              <span style={{ color: 'var(--text-1)' }}>{sc.description}</span>
               <kbd style={{
                 fontFamily: 'var(--font-sf)',
                 fontSize: 12, fontWeight: 600,
@@ -70,7 +70,7 @@ export default function ShortcutsHelp({ shortcuts, onClose }: Props) {
                 borderRadius: 'var(--radius-sm)',
                 background: 'var(--bg-btn)',
                 border: '1px solid var(--border-default)',
-                color: 'rgba(var(--rgb-fg), 0.85)',
+                color: 'var(--text-1)',
                 minWidth: 32, textAlign: 'center',
               }}>
                 {formatCombo(sc.combo)}
@@ -79,7 +79,7 @@ export default function ShortcutsHelp({ shortcuts, onClose }: Props) {
           ))}
         </div>
 
-        <div style={{ marginTop: 14, fontSize: 11, color: 'rgba(var(--rgb-fg), 0.4)' }}>
+        <div style={{ marginTop: 14, fontSize: 11, color: 'var(--text-4)' }}>
           Tipp: Drücke <kbd style={{ fontFamily: 'var(--font-sf)', fontSize: 11, padding: '1px 6px', borderRadius: 4, background: 'var(--bg-btn)', border: '1px solid var(--border-default)' }}>?</kbd> jederzeit, um diese Liste zu öffnen.
         </div>
       </div>

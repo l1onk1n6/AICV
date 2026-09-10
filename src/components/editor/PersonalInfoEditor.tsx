@@ -71,7 +71,7 @@ export default function PersonalInfoEditor() {
               {info.photo ? (
                 <img src={info.photo} alt="Foto" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
-                <div style={{ textAlign: 'center', color: 'rgba(var(--rgb-fg),0.4)' }}>
+                <div style={{ textAlign: 'center', color: 'var(--text-4)' }}>
                   <Camera size={20} />
                   <div style={{ fontSize: 9, marginTop: 3 }}>{t('Foto')}</div>
                 </div>
@@ -84,7 +84,7 @@ export default function PersonalInfoEditor() {
         {photoError && (
           <div style={{
             position: 'absolute', bottom: -24, left: 0, right: 0,
-            fontSize: 10, color: '#ff6b6b', display: 'flex', alignItems: 'center', gap: 4,
+            fontSize: 10, color: 'var(--ios-red)', display: 'flex', alignItems: 'center', gap: 4,
           }}>
             <AlertCircle size={10} /> {photoError}
           </div>

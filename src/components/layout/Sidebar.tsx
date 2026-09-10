@@ -149,11 +149,11 @@ export default function Sidebar({ onClose, collapsed = false, onToggleCollapse }
         {!isPro ? (
           <button onClick={() => setShowUpgrade(true)} className="btn-glass"
             style={{ width: '100%', justifyContent: 'center', padding: '8px 12px', background: 'linear-gradient(135deg, rgba(255,159,10,0.12), rgba(255,55,95,0.1))', border: '1px solid rgba(255,159,10,0.25)', boxShadow: 'none', fontSize: 12, gap: 7 }}>
-            <Sparkles size={14} style={{ color: '#FF9F0A' }} />
-            <span style={{ fontWeight: 600, color: '#FF9F0A' }}>{t('Auf Pro upgraden')}</span>
+            <Sparkles size={14} style={{ color: 'var(--ios-amber)' }} />
+            <span style={{ fontWeight: 600, color: 'var(--ios-amber)' }}>{t('Auf Pro upgraden')}</span>
           </button>
         ) : (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, color: '#FF9F0A', padding: '4px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, color: 'var(--ios-amber)', padding: '4px 0' }}>
             <Sparkles size={12} /><span style={{ fontWeight: 700 }}>PATH Pro</span>
           </div>
         )}
@@ -286,7 +286,7 @@ function MappeSwitcher(props: MappeSwitcherProps) {
           <div style={{ fontSize: 13, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {headerName}
           </div>
-          <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.5)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <div style={{ fontSize: 11, color: 'var(--text-4)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {headerSub}
           </div>
         </div>
@@ -323,7 +323,7 @@ function MappeSwitcher(props: MappeSwitcherProps) {
               overflowY: 'auto', padding: '6px 5px',
             }}>
               {persons.length === 0 && (
-                <div style={{ padding: '24px 8px', textAlign: 'center', color: 'rgba(var(--rgb-fg),0.35)', fontSize: 12 }}>
+                <div style={{ padding: '24px 8px', textAlign: 'center', color: 'var(--text-4)', fontSize: 12 }}>
                   Noch keine Person.
                 </div>
               )}
@@ -354,8 +354,8 @@ function MappeSwitcher(props: MappeSwitcherProps) {
                         {dname}
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
-                        <span style={{ fontSize: 10, color: 'rgba(var(--rgb-fg),0.4)' }}>{personResumes.length} {personResumes.length === 1 ? t('Mappe') : t('Mappen')}</span>
-                        {isFrozenP && <Lock size={9} style={{ color: '#FF9F0A', flexShrink: 0 }} />}
+                        <span style={{ fontSize: 10, color: 'var(--text-4)' }}>{personResumes.length} {personResumes.length === 1 ? t('Mappe') : t('Mappen')}</span>
+                        {isFrozenP && <Lock size={9} style={{ color: 'var(--ios-amber)', flexShrink: 0 }} />}
                       </div>
                     </div>
                   </button>
@@ -366,7 +366,7 @@ function MappeSwitcher(props: MappeSwitcherProps) {
             {/* Right: Mappen of focused person */}
             <div style={{ flex: 1, overflowY: 'auto', padding: '6px 5px', minWidth: 0 }}>
               {!focusedPerson ? (
-                <div style={{ padding: '24px 8px', textAlign: 'center', color: 'rgba(var(--rgb-fg),0.35)', fontSize: 12 }}>
+                <div style={{ padding: '24px 8px', textAlign: 'center', color: 'var(--text-4)', fontSize: 12 }}>
                   {t('Person auswählen')}
                 </div>
               ) : (
@@ -374,13 +374,13 @@ function MappeSwitcher(props: MappeSwitcherProps) {
                   {/* Section header */}
                   <div style={{
                     fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase',
-                    color: 'rgba(var(--rgb-fg),0.3)', padding: '4px 8px 8px',
+                    color: 'var(--text-4)', padding: '4px 8px 8px',
                   }}>
                     {t('Mappen')}
                   </div>
 
                   {focusedResumes.length === 0 && (
-                    <div style={{ padding: '12px 8px', textAlign: 'center', color: 'rgba(var(--rgb-fg),0.35)', fontSize: 12 }}>
+                    <div style={{ padding: '12px 8px', textAlign: 'center', color: 'var(--text-4)', fontSize: 12 }}>
                       {t('Keine Mappen vorhanden')}
                     </div>
                   )}
@@ -410,7 +410,7 @@ function MappeSwitcher(props: MappeSwitcherProps) {
                           }}
                         >
                           {isResumeFrozen
-                            ? <Lock size={12} style={{ flexShrink: 0, color: '#FF9F0A', opacity: 0.7 }} />
+                            ? <Lock size={12} style={{ flexShrink: 0, color: 'var(--ios-amber)', opacity: 0.7 }} />
                             : <FileText size={12} style={{ flexShrink: 0, opacity: 0.45 }} />}
                           <span style={{ fontSize: 13, fontWeight: isActiveR ? 600 : 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
                             {name}
@@ -457,7 +457,7 @@ function MappeSwitcher(props: MappeSwitcherProps) {
                 style={{
                   width: LEFT_W, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
                   background: 'none', border: 'none', borderRight: '1px solid rgba(var(--rgb-fg),0.09)',
-                  cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.5)', fontSize: 12, padding: '0 8px',
+                  cursor: 'pointer', color: 'var(--text-4)', fontSize: 12, padding: '0 8px',
                 }}
               >
                 <Plus size={14} /> {t('Neue Person')}
@@ -472,7 +472,7 @@ function MappeSwitcher(props: MappeSwitcherProps) {
                 flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
                 background: 'none', border: 'none',
                 cursor: focusedPerson && !focusedFrozen ? 'pointer' : 'default',
-                color: focusedPerson && !focusedFrozen ? 'rgba(var(--rgb-fg),0.5)' : 'rgba(var(--rgb-fg),0.2)',
+                color: focusedPerson && !focusedFrozen ? 'var(--text-3)' : 'var(--text-4)',
                 fontSize: 12, padding: '0 8px',
               }}
             >

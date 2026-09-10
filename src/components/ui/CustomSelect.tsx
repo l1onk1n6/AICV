@@ -122,7 +122,7 @@ export function CustomSelect({ value, onChange, options, style, placeholder = 'A
               transition: 'background 0.1s',
               // Kein festes Weiss: der ausgewaehlte Eintrag steht auf einer nur
               // leicht blau getoenten Flaeche und waere im Hellmodus unsichtbar.
-              color: isSelected ? 'rgba(var(--rgb-fg),0.95)' : 'rgba(var(--rgb-fg),0.85)',
+              color: isSelected ? 'var(--text-1)' : 'var(--text-2)',
             }}
             onMouseEnter={(e) => {
               if (!isSelected) (e.currentTarget as HTMLDivElement).style.background = 'rgba(var(--rgb-fg),0.08)';
@@ -132,7 +132,7 @@ export function CustomSelect({ value, onChange, options, style, placeholder = 'A
             }}
           >
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{opt.label}</span>
-            {isSelected && <Check size={14} style={{ flexShrink: 0, color: '#007AFF' }} />}
+            {isSelected && <Check size={14} style={{ flexShrink: 0, color: 'var(--ios-blue)' }} />}
           </div>
         );
       })}
@@ -152,7 +152,7 @@ export function CustomSelect({ value, onChange, options, style, placeholder = 'A
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        <span style={{ color: hasValue ? undefined : 'rgba(var(--rgb-fg),0.35)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, textAlign: 'left' }}>
+        <span style={{ color: hasValue ? undefined : 'var(--text-4)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, textAlign: 'left' }}>
           {displayLabel}
         </span>
         <ChevronDown

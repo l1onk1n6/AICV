@@ -153,7 +153,7 @@ export default function ProjectsEditor() {
                     value={project.description} maxLength={1000}
                     rows={4}
                     onChange={(e) => updateProject(resume.id, project.id, { description: e.target.value })} />
-                  <div style={{ fontSize: 10, color: 'rgba(var(--rgb-fg),0.35)', marginTop: 4 }}>
+                  <div style={{ fontSize: 10, color: 'var(--text-4)', marginTop: 4 }}>
                     Tipp: Einfach tippen — pro Zeile ein Punkt. Bullets fügt das System automatisch ein.
                   </div>
                 </div>
@@ -236,7 +236,7 @@ export default function ProjectsEditor() {
                     {cert.name || `Zertifikat ${i + 1}`}
                   </div>
                   {(cert.issuer || cert.date) && (
-                    <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.55)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: 12, color: 'var(--text-3)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {[cert.issuer, cert.date].filter(Boolean).join(' · ')}
                     </div>
                   )}

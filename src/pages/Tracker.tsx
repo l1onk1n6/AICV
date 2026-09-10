@@ -7,12 +7,12 @@ import { useIsMobile } from '../hooks/useBreakpoint';
 import { CustomSelect } from '../components/ui/CustomSelect';
 
 const STATUS_CONFIG: Record<ApplicationStatus, { label: string; color: string; bg: string }> = {
-  offen:          { label: 'Offen',           color: 'rgba(var(--rgb-fg),0.55)', bg: 'rgba(var(--rgb-fg),0.08)' },
-  beworben:       { label: 'Beworben',        color: '#007AFF',                bg: 'rgba(0,122,255,0.15)'    },
-  interview:      { label: 'Interview',       color: '#FF9F0A',                bg: 'rgba(255,159,10,0.15)'   },
-  angebot:        { label: 'Angebot',         color: '#34C759',                bg: 'rgba(52,199,89,0.15)'    },
-  abgelehnt:      { label: 'Abgelehnt',       color: '#FF3B30',                bg: 'rgba(255,59,48,0.12)'    },
-  zurueckgezogen: { label: 'Zurückgezogen',   color: 'rgba(var(--rgb-fg),0.35)', bg: 'rgba(var(--rgb-fg),0.05)'  },
+  offen:          { label: 'Offen',           color: 'var(--text-3)', bg: 'rgba(var(--rgb-fg),0.08)' },
+  beworben:       { label: 'Beworben',        color: 'var(--ios-blue)',                bg: 'rgba(0,122,255,0.15)'    },
+  interview:      { label: 'Interview',       color: 'var(--ios-amber)',                bg: 'rgba(255,159,10,0.15)'   },
+  angebot:        { label: 'Angebot',         color: 'var(--ios-green)',                bg: 'rgba(52,199,89,0.15)'    },
+  abgelehnt:      { label: 'Abgelehnt',       color: 'var(--ios-red)',                bg: 'rgba(255,59,48,0.12)'    },
+  zurueckgezogen: { label: 'Zurückgezogen',   color: 'var(--text-4)', bg: 'rgba(var(--rgb-fg),0.05)'  },
 };
 
 const TYPE_CONFIG: Record<ApplicationType, { label: string; icon: string }> = {
@@ -42,7 +42,7 @@ function TypeBadge({ type }: { type: ApplicationType }) {
       display: 'inline-flex', alignItems: 'center', gap: 4,
       padding: '2px 8px', borderRadius: 20,
       fontSize: 11, fontWeight: 500, whiteSpace: 'nowrap',
-      color: 'rgba(var(--rgb-fg),0.5)',
+      color: 'var(--text-4)',
       background: 'rgba(var(--rgb-fg),0.06)',
       border: '1px solid rgba(var(--rgb-fg),0.1)',
     }}>
@@ -131,7 +131,7 @@ export default function Tracker() {
             </div>
             <h2 style={{ margin: 0, fontSize: 17, fontWeight: 700 }}>{t('Bewerbungs-Tracker')}</h2>
           </div>
-          <p style={{ margin: 0, fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)' }}>
+          <p style={{ margin: 0, fontSize: 13, color: 'var(--text-4)' }}>
             {applications.length} Bewerbung{applications.length !== 1 ? 'en' : ''} total
           </p>
         </div>
@@ -156,7 +156,7 @@ export default function Tracker() {
             return (
               <div key={s} style={{
                 padding: '8px 14px', borderRadius: 10, fontSize: 12, fontWeight: 600,
-                background: cfg.bg, border: `1px solid ${cfg.color}33`, color: cfg.color,
+                background: cfg.bg, border: `1px solid color-mix(in srgb, ${cfg.color} 20%, transparent)`, color: cfg.color,
                 cursor: 'pointer', opacity: filter !== 'all' && filter !== s ? 0.5 : 1,
                 transition: 'opacity 0.15s',
               }} onClick={() => setFilter(filter === s ? 'all' : s)}>
@@ -194,7 +194,7 @@ export default function Tracker() {
         <div className="glass-card" style={{ padding: '48px 24px', textAlign: 'center' }}>
           <ClipboardList size={36} style={{ margin: '0 auto 12px', opacity: 0.3, display: 'block' }} />
           <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 6 }}>{t('Noch keine Bewerbungen')}</div>
-          <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.4)', marginBottom: 20 }}>
+          <p style={{ fontSize: 13, color: 'var(--text-4)', marginBottom: 20 }}>
             Füge deine erste Bewerbung hinzu und behalte den Überblick.
           </p>
           <button className="btn-glass btn-primary" onClick={addApplication}>
@@ -224,18 +224,18 @@ export default function Tracker() {
                         {app.company || <span style={{ opacity: 0.4 }}>{t('Firma')}</span>}
                       </span>
                       {app.position && (
-                        <span style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.5)' }}>· {app.position}</span>
+                        <span style={{ fontSize: 12, color: 'var(--text-4)' }}>· {app.position}</span>
                       )}
                     </div>
                     {(app.appliedDate || app.deadline) && (
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 2 }}>
                         {app.appliedDate && (
-                          <span style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.35)' }}>
+                          <span style={{ fontSize: 11, color: 'var(--text-4)' }}>
                             {formatDate(app.appliedDate)}
                           </span>
                         )}
                         {app.deadline && (
-                          <span style={{ fontSize: 11, color: 'rgba(255,159,10,0.7)' }}>
+                          <span style={{ fontSize: 11, color: 'var(--ios-amber)' }}>
                             Deadline: {formatDate(app.deadline)}
                           </span>
                         )}
@@ -265,11 +265,16 @@ export default function Tracker() {
                         key={s}
                         onClick={(e) => { e.stopPropagation(); updateApplication(app.id, { status: s }); }}
                         style={{
-                          padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600,
+                          // 3 px Innenabstand ergaben 23 px Hoehe. Sechs Stufen
+                          // nebeneinander auf 44 px zu bringen wuerde jede
+                          // Tracker-Karte um ueber 20 px aufblaehen; 7 px
+                          // bringen die Flaeche auf 31 px und damit ueber die
+                          // 24 px, die WCAG 2.5.8 als Mindestmass nennt.
+                          padding: '7px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600,
                           cursor: 'pointer', border: 'none', transition: 'all 0.15s',
                           background: isActive ? cfg.bg : 'rgba(var(--rgb-fg),0.05)',
-                          color: isActive ? cfg.color : 'rgba(var(--rgb-fg),0.3)',
-                          outline: isActive ? `1px solid ${cfg.color}30` : '1px solid rgba(var(--rgb-fg),0.08)',
+                          color: isActive ? cfg.color : 'var(--text-4)',
+                          outline: isActive ? `1px solid color-mix(in srgb, ${cfg.color} 19%, transparent)` : '1px solid rgba(var(--rgb-fg),0.08)',
                         }}
                       >
                         {t(cfg.label)}
@@ -351,7 +356,7 @@ export default function Tracker() {
                               cursor: 'pointer',
                               border: isActive ? '1px solid rgba(0,122,255,0.4)' : '1px solid rgba(var(--rgb-fg),0.1)',
                               background: isActive ? 'rgba(0,122,255,0.2)' : 'rgba(var(--rgb-fg),0.06)',
-                              color: isActive ? '#fff' : 'rgba(var(--rgb-fg),0.55)',
+                              color: isActive ? 'var(--text-1)' : 'var(--text-3)',
                               transition: 'all 0.15s',
                             }}
                           >
@@ -399,7 +404,7 @@ export default function Tracker() {
       </div>
 
       {filtered.length === 0 && applications.length > 0 && (
-        <div style={{ textAlign: 'center', padding: 32, color: 'rgba(var(--rgb-fg),0.35)', fontSize: 13 }}>
+        <div style={{ textAlign: 'center', padding: 32, color: 'var(--text-4)', fontSize: 13 }}>
           Keine Bewerbungen mit diesem Filter.
         </div>
       )}
@@ -439,7 +444,7 @@ export default function Tracker() {
             </div>
 
             {resumes.length === 0 ? (
-              <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.4)', textAlign: 'center', padding: '24px 0' }}>
+              <p style={{ fontSize: 13, color: 'var(--text-4)', textAlign: 'center', padding: '24px 0' }}>
                 Keine Mappen vorhanden.
               </p>
             ) : (
@@ -464,11 +469,11 @@ export default function Tracker() {
                         borderRadius: 8,
                       }}
                     >
-                      <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(var(--rgb-fg), 0.95)' }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-1)' }}>
                         {resume.name || 'Unbenannte Mappe'}
                       </span>
                       {personName && (
-                        <span style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.45)' }}>{personName}</span>
+                        <span style={{ fontSize: 11, color: 'var(--text-4)' }}>{personName}</span>
                       )}
                     </button>
                   );

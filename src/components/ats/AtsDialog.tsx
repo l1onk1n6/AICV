@@ -52,7 +52,7 @@ export default function AtsDialog({ onClose }: Props) {
             </div>
             <div>
               <div style={{ fontSize: 16, fontWeight: 700 }}>{t('ATS-Score')}</div>
-              <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.5)', marginTop: 2 }}>
+              <div style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 2 }}>
                 {personName} · {resume?.name || t('Bewerbungsmappe')}
               </div>
             </div>
@@ -66,7 +66,7 @@ export default function AtsDialog({ onClose }: Props) {
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px 22px' }}>
           {!result ? (
             <>
-              <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.6)', marginBottom: 14, lineHeight: 1.5 }}>
+              <p style={{ fontSize: 13, color: 'var(--text-3)', marginBottom: 14, lineHeight: 1.5 }}>
                 {t('Füge die komplette Stellenanzeige ein. Die Analyse vergleicht relevante Keywords aus dem Inserat mit deinem aktuellen Lebenslauf, gibt einen Score und konkrete Hinweise.')}
               </p>
               <textarea
@@ -78,7 +78,7 @@ export default function AtsDialog({ onClose }: Props) {
                 style={{ fontSize: 13, padding: 12, marginBottom: 14, minHeight: 220 }}
               />
               <div style={{ display: 'flex', gap: 8, justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
-                <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)' }}>
+                <div style={{ fontSize: 11, color: 'var(--text-4)' }}>
                   {jobDescription.trim().split(/\s+/).filter(Boolean).length} {t('Wörter · lokal verarbeitet, kein Upload')}
                 </div>
                 <button
@@ -88,7 +88,7 @@ export default function AtsDialog({ onClose }: Props) {
                   style={{ padding: '10px 18px', gap: 8 }}
                 >
                   {running ? (
-                    <><Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> {t('Analysiere…')}</>
+                    <><Loader2 data-motion="essential" size={14} style={{ animation: 'spin 1s linear infinite' }} /> {t('Analysiere…')}</>
                   ) : (
                     <><Sparkles size={14} /> {t('Analyse starten')}</>
                   )}
@@ -124,12 +124,12 @@ function AtsResultView({ result, onAgain, scoreColor }: { result: AtsAnalysis; o
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           }}>
             <div style={{ fontSize: 24, fontWeight: 800, color: scoreColor, lineHeight: 1 }}>{result.score}</div>
-            <div style={{ fontSize: 9, color: 'rgba(var(--rgb-fg),0.4)', marginTop: 2 }}>{t('von 100')}</div>
+            <div style={{ fontSize: 9, color: 'var(--text-4)', marginTop: 2 }}>{t('von 100')}</div>
           </div>
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 6 }}>{t('Match-Score')}</div>
-          <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.6)', lineHeight: 1.5 }}>
+          <div style={{ fontSize: 12, color: 'var(--text-3)', lineHeight: 1.5 }}>
             {t('{n} von {total} relevanten Keywords sind im Lebenslauf vorhanden.')
               .replace('{n}', String(result.matched.length))
               .replace('{total}', String(result.totalJdKeywords))}
@@ -141,7 +141,7 @@ function AtsResultView({ result, onAgain, scoreColor }: { result: AtsAnalysis; o
       {result.tips.length > 0 && (
         <div style={{ background: 'rgba(0,122,255,0.08)', border: '1px solid rgba(0,122,255,0.2)', borderRadius: 10, padding: '12px 14px', marginBottom: 18 }}>
           <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--ios-blue)', letterSpacing: '0.06em', marginBottom: 6, textTransform: 'uppercase' }}>{t('Empfehlungen')}</div>
-          <ul style={{ margin: 0, paddingLeft: 16, fontSize: 13, color: 'rgba(var(--rgb-fg),0.8)', lineHeight: 1.6 }}>
+          <ul style={{ margin: 0, paddingLeft: 16, fontSize: 13, color: 'var(--text-2)', lineHeight: 1.6 }}>
             {result.tips.map((t, i) => <li key={i}>{t}</li>)}
           </ul>
         </div>
@@ -185,10 +185,10 @@ function KeywordList({ title, icon, color, items, empty }: {
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
         {icon}
         <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color }}>{title}</span>
-        <span style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)', marginLeft: 'auto' }}>{items.length}</span>
+        <span style={{ fontSize: 11, color: 'var(--text-4)', marginLeft: 'auto' }}>{items.length}</span>
       </div>
       {items.length === 0 ? (
-        <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.4)', padding: '4px 0' }}>{empty}</div>
+        <div style={{ fontSize: 12, color: 'var(--text-4)', padding: '4px 0' }}>{empty}</div>
       ) : (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           {items.slice(0, 24).map(({ keyword, jdCount }) => (
@@ -201,11 +201,11 @@ function KeywordList({ title, icon, color, items, empty }: {
               title={t('{n}× in der Stellenanzeige').replace('{n}', String(jdCount))}
             >
               {keyword}
-              {jdCount > 1 && <span style={{ fontSize: 9, color: 'rgba(var(--rgb-fg),0.4)' }}>×{jdCount}</span>}
+              {jdCount > 1 && <span style={{ fontSize: 9, color: 'var(--text-4)' }}>×{jdCount}</span>}
             </span>
           ))}
           {items.length > 24 && (
-            <span style={{ fontSize: 10, color: 'rgba(var(--rgb-fg),0.3)', alignSelf: 'center' }}>
+            <span style={{ fontSize: 10, color: 'var(--text-4)', alignSelf: 'center' }}>
               {t('+{n} weitere').replace('{n}', String(items.length - 24))}
             </span>
           )}

@@ -105,7 +105,7 @@ function ReminderPanel({ resumeId, deadline, reminderDays, onClose }: {
         {t('E-Mail-Reminder vor Frist')}
       </div>
       {!deadline && (
-        <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.4)', marginBottom: 10 }}>
+        <div style={{ fontSize: 12, color: 'var(--text-4)', marginBottom: 10 }}>
           {t('Zuerst eine Bewerbungsfrist setzen.')}
         </div>
       )}
@@ -124,7 +124,7 @@ function ReminderPanel({ resumeId, deadline, reminderDays, onClose }: {
         <button className="btn-glass btn-sm" onClick={onClose} style={{ fontSize: 12 }}>{t('Abbrechen')}</button>
         <button className="btn-glass btn-primary btn-sm" onClick={save} disabled={saving || !deadline}
           style={{ fontSize: 12, gap: 5 }}>
-          {saved ? <><Check size={12} /> {t('Gespeichert')}</> : saving ? <><Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} /> {t('Speichern…')}</> : t('Speichern')}
+          {saved ? <><Check size={12} /> {t('Gespeichert')}</> : saving ? <><Loader2 data-motion="essential" size={12} style={{ animation: 'spin 1s linear infinite' }} /> {t('Speichern…')}</> : t('Speichern')}
         </button>
       </div>
       <style>{`@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }`}</style>
@@ -253,11 +253,11 @@ export default function CoverLetterEditor() {
             onClick={e => e.stopPropagation()}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(255,159,10,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <AlertTriangle size={18} style={{ color: '#FF9F0A' }} />
+                <AlertTriangle size={18} style={{ color: 'var(--ios-amber)' }} />
               </div>
               <div>
                 <div style={{ fontWeight: 700, fontSize: 15 }}>{t('Bestehenden Text überschreiben?')}</div>
-                <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.45)', marginTop: 2 }}>
+                <div style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>
                   {confirmOverwrite === 'generate'
                     ? t('Der KI-Assistent ersetzt deinen aktuellen Anschreiben-Text.')
                     : confirmOverwrite === 'template'
@@ -266,7 +266,7 @@ export default function CoverLetterEditor() {
                 </div>
               </div>
             </div>
-            <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.5)', margin: '0 0 20px', lineHeight: 1.55 }}>
+            <p style={{ fontSize: 13, color: 'var(--text-4)', margin: '0 0 20px', lineHeight: 1.55 }}>
               {t('Dein bestehender Text wird unwiderruflich ersetzt. Möchtest du fortfahren?')}
             </p>
             <div style={{ display: 'flex', gap: 8 }}>
@@ -275,7 +275,7 @@ export default function CoverLetterEditor() {
               </button>
               <button
                 className="btn-glass"
-                style={{ flex: 1, background: 'rgba(255,159,10,0.2)', border: '1px solid rgba(255,159,10,0.4)', color: '#FF9F0A', fontWeight: 700 }}
+                style={{ flex: 1, background: 'rgba(255,159,10,0.2)', border: '1px solid rgba(255,159,10,0.4)', color: 'var(--ios-amber)', fontWeight: 700 }}
                 onClick={() => {
                   if (confirmOverwrite === 'generate') doGenerateCL();
                   else if (confirmOverwrite === 'template') { update('body', pendingTemplate); setConfirmOverwrite(null); setPendingTemplate(''); }
@@ -366,7 +366,7 @@ export default function CoverLetterEditor() {
             <button
               className="btn-glass btn-sm"
               onClick={addToTracker}
-              style={{ fontSize: 11, gap: 5, background: trackerAdded ? 'rgba(52,199,89,0.15)' : undefined, border: trackerAdded ? '1px solid rgba(52,199,89,0.3)' : undefined, color: trackerAdded ? '#34C759' : undefined }}
+              style={{ fontSize: 11, gap: 5, background: trackerAdded ? 'rgba(52,199,89,0.15)' : undefined, border: trackerAdded ? '1px solid rgba(52,199,89,0.3)' : undefined, color: trackerAdded ? 'var(--ios-green)' : undefined }}
             >
               {trackerAdded
                 ? <><Check size={12} /> {t('Hinzugefügt')}</>
@@ -435,12 +435,12 @@ export default function CoverLetterEditor() {
           }}
           onClick={() => isPro ? setShowAiPanel(v => !v) : setShowUpgrade(true)}
         >
-          <Sparkles size={14} style={{ color: isPro ? '#FF9F0A' : 'rgba(var(--rgb-fg),0.4)' }} />
-          <span style={{ fontSize: 13, fontWeight: 600, flex: 1, textAlign: 'left', color: isPro ? '#FF9F0A' : 'rgba(var(--rgb-fg),0.5)' }}>
+          <Sparkles size={14} style={{ color: isPro ? 'var(--ios-amber)' : 'var(--text-4)' }} />
+          <span style={{ fontSize: 13, fontWeight: 600, flex: 1, textAlign: 'left', color: isPro ? 'var(--ios-amber)' : 'var(--text-4)' }}>
             {t('KI-Assistent — Anschreiben generieren')}
           </span>
           {!isPro && (
-            <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 5px', borderRadius: 4, background: 'linear-gradient(135deg, #FF9F0A, #FF375F)', color: '#fff' }}>PRO</span>
+            <span style={{ fontSize: 9, fontWeight: 800, padding: '2px 5px', borderRadius: 4, background: 'linear-gradient(135deg, #FF9F0A, #FF375F)', color: '#1c1c1e' }}>PRO</span>
           )}
           {isPro && (showAiPanel ? <ChevronUp size={14} style={{ opacity: 0.5 }} /> : <ChevronDown size={14} style={{ opacity: 0.5 }} />)}
         </button>
@@ -448,7 +448,7 @@ export default function CoverLetterEditor() {
         {showAiPanel && (
           <div style={{ padding: '0 14px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
             {hasExistingBody && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 8, background: 'rgba(255,159,10,0.08)', border: '1px solid rgba(255,159,10,0.2)', fontSize: 12, color: '#FF9F0A' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 8, background: 'rgba(255,159,10,0.08)', border: '1px solid rgba(255,159,10,0.2)', fontSize: 12, color: 'var(--ios-amber)' }}>
                 <AlertTriangle size={12} style={{ flexShrink: 0 }} />
                 {t('Der bestehende Anschreiben-Text wird überschrieben.')}
               </div>
@@ -481,11 +481,11 @@ export default function CoverLetterEditor() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                 padding: '10px 16px',
                 background: generatingCL ? 'rgba(255,159,10,0.1)' : 'linear-gradient(135deg, rgba(255,159,10,0.3), rgba(255,55,95,0.2))',
-                border: '1px solid rgba(255,159,10,0.4)', color: '#FF9F0A', fontWeight: 700, fontSize: 13,
+                border: '1px solid rgba(255,159,10,0.4)', color: 'var(--ios-amber)', fontWeight: 700, fontSize: 13,
               }}
             >
               {generatingCL
-                ? <><Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> {t('Wird generiert…')}</>
+                ? <><Loader2 data-motion="essential" size={14} style={{ animation: 'spin 1s linear infinite' }} /> {t('Wird generiert…')}</>
                 : <><Sparkles size={14} /> {t('Anschreiben generieren')}</>}
             </button>
           </div>
@@ -503,7 +503,7 @@ export default function CoverLetterEditor() {
             title={!isPro ? t('Pro-Feature') : t('Text mit KI verbessern')}
           >
             {improvingBody
-              ? <><Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} /> {t('Verbessert…')}</>
+              ? <><Loader2 data-motion="essential" size={12} style={{ animation: 'spin 1s linear infinite' }} /> {t('Verbessert…')}</>
               : <><Wand2 size={12} /> {t('Verbessern')}{!isPro && ' ✦'}</>}
           </button>
         </div>

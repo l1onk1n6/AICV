@@ -77,11 +77,11 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
               <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg, #FF9F0A, #FF375F)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Sparkles size={16} style={{ color: '#fff' }} />
+                <Sparkles size={16} style={{ color: '#1c1c1e' }} />
               </div>
               <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: '-0.3px' }}>PATH Pro</span>
             </div>
-            <p style={{ margin: 0, fontSize: 13, color: 'rgba(var(--rgb-fg),0.5)' }}>
+            <p style={{ margin: 0, fontSize: 13, color: 'var(--text-4)' }}>
               Alle Funktionen für professionelle Bewerbungen
             </p>
           </div>
@@ -107,7 +107,7 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
                     flex: 1, padding: '8px 12px', borderRadius: 8, border: 'none', cursor: 'pointer',
                     fontSize: 13, fontWeight: 600, transition: 'all 0.15s',
                     background: active ? 'linear-gradient(135deg, rgba(255,159,10,0.35), rgba(255,55,95,0.28))' : 'transparent',
-                    color: active ? 'rgba(var(--rgb-fg),0.95)' : 'rgba(var(--rgb-fg),0.45)',
+                    color: active ? 'var(--text-1)' : 'var(--text-4)',
                     boxShadow: active ? '0 2px 8px rgba(0,0,0,0.25)' : 'none',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
                   }}
@@ -120,7 +120,7 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
                       <span style={{
                         fontSize: 10, fontWeight: 700, padding: '1px 5px', borderRadius: 4,
                         background: active ? 'rgba(52,199,89,0.35)' : 'rgba(52,199,89,0.2)',
-                        color: '#34C759', border: '1px solid rgba(52,199,89,0.4)',
+                        color: 'var(--ios-green)', border: '1px solid rgba(52,199,89,0.4)',
                       }}>−18%</span>
                     </>
                   )}
@@ -146,14 +146,14 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
                 <span style={{ fontSize: 15, flexShrink: 0, lineHeight: 1.4 }}>{f.icon}</span>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 1 }}>{f.label}</div>
-                  <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.45)' }}>{f.description}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-4)' }}>{f.description}</div>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Coming soon */}
-          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(var(--rgb-fg),0.35)', textTransform: 'uppercase', padding: '2px 4px', marginBottom: 8 }}>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', color: 'var(--text-4)', textTransform: 'uppercase', padding: '2px 4px', marginBottom: 8 }}>
             ⏳ In Entwicklung
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: 6 }}>
@@ -167,7 +167,7 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
                 <span style={{ fontSize: 15, flexShrink: 0, lineHeight: 1.4 }}>{f.icon}</span>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 1 }}>{f.label}</div>
-                  <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)' }}>{f.description}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-4)' }}>{f.description}</div>
                 </div>
               </div>
             ))}
@@ -187,11 +187,11 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
                 ? 'rgba(255,159,10,0.15)'
                 : 'linear-gradient(135deg, rgba(255,159,10,0.4), rgba(255,55,95,0.35))',
               border: '1px solid rgba(255,159,10,0.5)',
-              color: '#fff', opacity: loading ? 0.8 : 1, cursor: loading ? 'not-allowed' : 'pointer',
+              color: 'var(--text-1)', opacity: loading ? 0.8 : 1, cursor: loading ? 'not-allowed' : 'pointer',
             }}
           >
             {loading
-              ? <><Loader2 size={15} style={{ animation: 'spin 1s linear infinite' }} /> {Capacitor.isNativePlatform() ? t('Öffne Google Play…') : t('Weiterleitung zu Stripe…')}</>
+              ? <><Loader2 data-motion="essential" size={15} style={{ animation: 'spin 1s linear infinite' }} /> {Capacitor.isNativePlatform() ? t('Öffne Google Play…') : t('Weiterleitung zu Stripe…')}</>
               : <><Sparkles size={14} /> {Capacitor.isNativePlatform()
                   ? t('Jetzt upgraden — PATH Pro')
                   : plan === 'yearly'
@@ -202,12 +202,12 @@ export function UpgradeModal({ onClose, highlightId }: { onClose: () => void; hi
           </button>
 
           {checkoutError && (
-            <p style={{ margin: 0, fontSize: 12, color: '#FF6B6B', textAlign: 'center' }}>
+            <p style={{ margin: 0, fontSize: 12, color: 'var(--ios-red)', textAlign: 'center' }}>
               {checkoutError}
             </p>
           )}
 
-          <p style={{ margin: 0, fontSize: 11, color: 'rgba(var(--rgb-fg),0.3)', textAlign: 'center' }}>
+          <p style={{ margin: 0, fontSize: 11, color: 'var(--text-4)', textAlign: 'center' }}>
             {Capacitor.isNativePlatform()
               ? t('Abrechnung über Google Play · Jederzeit kündbar')
               : plan === 'yearly'
@@ -249,19 +249,19 @@ export default function ProGate({ featureId, children, badge = false }: ProGateP
         fontSize: 9, fontWeight: 700, letterSpacing: '0.04em',
         padding: '2px 4px', borderRadius: 3,
         background: 'rgba(var(--rgb-fg),0.12)', border: '1px solid rgba(var(--rgb-fg),0.18)',
-        color: 'rgba(var(--rgb-fg),0.75)', pointerEvents: 'none', whiteSpace: 'nowrap', zIndex: 1,
+        color: 'var(--text-2)', pointerEvents: 'none', whiteSpace: 'nowrap', zIndex: 1,
       }}>BALD</span>
     ) : (
       <div style={{
         position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
         gap: 6, borderRadius: 'inherit', background: 'rgba(0,0,0,0.2)',
       }}>
-        <Clock size={12} style={{ color: 'rgba(var(--rgb-fg),0.7)' }} />
+        <Clock size={12} style={{ color: 'var(--text-2)' }} />
         <span style={{
           fontSize: 10, fontWeight: 700, letterSpacing: '0.06em',
           padding: '3px 7px', borderRadius: 6,
           background: 'rgba(var(--rgb-fg),0.12)', border: '1px solid rgba(var(--rgb-fg),0.18)',
-          color: 'rgba(var(--rgb-fg),0.85)',
+          color: 'var(--text-1)',
         }}>BALD VERFÜGBAR</span>
       </div>
     );
@@ -273,10 +273,10 @@ export default function ProGate({ featureId, children, badge = false }: ProGateP
             <div className="glass-card animate-scale-in" onClick={e => e.stopPropagation()}
               style={{ padding: '24px 28px', maxWidth: 320, textAlign: 'center' }}>
               <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(88,86,214,0.2)', border: '1px solid rgba(88,86,214,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-                <Clock size={20} style={{ color: 'rgba(var(--rgb-fg),0.85)' }} />
+                <Clock size={20} style={{ color: 'var(--text-1)' }} />
               </div>
               <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 8 }}>{label} — bald verfügbar</div>
-              <div style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.55)', marginBottom: 16 }}>
+              <div style={{ fontSize: 13, color: 'var(--text-3)', marginBottom: 16 }}>
                 {feature.description}
               </div>
               <button className="btn-glass btn-primary btn-sm" onClick={() => setShowSoon(false)}>{t('Verstanden')}</button>
@@ -311,8 +311,14 @@ export default function ProGate({ featureId, children, badge = false }: ProGateP
             position: 'absolute', top: -5, right: -14,
             fontSize: 9, fontWeight: 800, letterSpacing: '0.04em',
             padding: '2px 4px', borderRadius: 3,
+            // Weiss auf diesem Verlauf ergibt 2,06:1 am Amber-Ende und
+            // 3,52:1 am Pink-Ende — in BEIDEN Themes, denn der Verlauf ist
+            // fest. (Der Board-Wert 1,0:1 war ein Messfehler: getComputedStyle
+            // liefert bei linear-gradient backgroundColor "transparent", also
+            // wurde weiss gegen die weisse Karte gerechnet.) Dunkler Text
+            // dreht es auf 10,2:1 bzw. 4,87:1.
             background: 'linear-gradient(135deg, #FF9F0A, #FF375F)',
-            color: '#fff', pointerEvents: 'none', whiteSpace: 'nowrap',
+            color: '#1c1c1e', pointerEvents: 'none', whiteSpace: 'nowrap',
             zIndex: 1,
           }}>PRO</span>
         </div>
@@ -334,12 +340,12 @@ export default function ProGate({ featureId, children, badge = false }: ProGateP
           gap: 6, borderRadius: 'inherit',
           background: 'rgba(0,0,0,0.15)',
         }}>
-          <Lock size={12} style={{ color: 'rgba(var(--rgb-fg),0.7)' }} />
+          <Lock size={12} style={{ color: 'var(--text-2)' }} />
           <span style={{
             fontSize: 10, fontWeight: 800, letterSpacing: '0.08em',
             padding: '3px 7px', borderRadius: 6,
             background: 'linear-gradient(135deg, #FF9F0A, #FF375F)',
-            color: '#fff',
+            color: '#1c1c1e',
           }}>PRO</span>
         </div>
       </div>

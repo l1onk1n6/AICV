@@ -83,9 +83,9 @@ export default function AuthCallbackPage({ authType }: { authType: AuthType }) {
             }}>
               {cfg.icon}
             </div>
-            <Loader2 size={20} style={{ animation: 'spin 1s linear infinite', color: 'var(--ios-blue)', marginBottom: 14 }} />
+            <Loader2 data-motion="essential" size={20} style={{ animation: 'spin 1s linear infinite', color: 'var(--ios-blue)', marginBottom: 14 }} />
             <h2 style={{ fontSize: 17, fontWeight: 700, margin: '0 0 8px', letterSpacing: '-0.3px' }}>{cfg.title}</h2>
-            <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.4)', margin: 0 }}>{cfg.subtitle}</p>
+            <p style={{ fontSize: 13, color: 'var(--text-4)', margin: 0 }}>{cfg.subtitle}</p>
             <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
           </>
         )}
@@ -98,12 +98,12 @@ export default function AuthCallbackPage({ authType }: { authType: AuthType }) {
               background: 'rgba(52,199,89,0.12)', border: '1px solid rgba(52,199,89,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <CheckCircle size={36} style={{ color: '#34c759' }} />
+              <CheckCircle size={36} style={{ color: 'var(--ios-green)' }} />
             </div>
             <h2 style={{ fontSize: 17, fontWeight: 700, margin: '0 0 8px', letterSpacing: '-0.3px' }}>{cfg.successTitle}</h2>
-            <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.4)', margin: 0 }}>{cfg.successSubtitle}</p>
+            <p style={{ fontSize: 13, color: 'var(--text-4)', margin: 0 }}>{cfg.successSubtitle}</p>
             {authType === 'recovery' && (
-              <p style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.25)', marginTop: 16 }}>
+              <p style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 16 }}>
                 {t('Das Formular zum Passwort setzen erscheint gleich…')}
               </p>
             )}
@@ -118,7 +118,7 @@ export default function AuthCallbackPage({ authType }: { authType: AuthType }) {
               background: 'rgba(255,59,48,0.12)', border: '1px solid rgba(255,59,48,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <XCircle size={36} style={{ color: '#ff3b30' }} />
+              <XCircle size={36} style={{ color: 'var(--ios-red)' }} />
             </div>
             <h2 style={{ fontSize: 17, fontWeight: 700, margin: '0 0 8px', letterSpacing: '-0.3px' }}>{t('Fehler aufgetreten')}</h2>
             <p style={{ fontSize: 13, color: 'rgba(255,59,48,0.8)', margin: '0 0 20px', lineHeight: 1.5 }}>

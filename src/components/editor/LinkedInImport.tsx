@@ -133,10 +133,10 @@ export default function LinkedInImportDialog({ onClose }: Props) {
             </svg>
             <div>
               <div style={{ fontWeight: 700, fontSize: 15 }}>{t('LinkedIn importieren')}</div>
-              <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)', marginTop: 1 }}>{t('Schritt {n} von 2 · KI-gestützt').replace('{n}', String(step))}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 1 }}>{t('Schritt {n} von 2 · KI-gestützt').replace('{n}', String(step))}</div>
             </div>
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.5)', padding: 4 }}>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-4)', padding: 4 }}>
             <X size={18} />
           </button>
         </div>
@@ -144,7 +144,7 @@ export default function LinkedInImportDialog({ onClose }: Props) {
         {step === 1 && (
           <>
             {/* Desktop instructions */}
-            <div style={{ padding: '12px 14px', borderRadius: 10, background: 'rgba(10,102,194,0.08)', border: '1px solid rgba(10,102,194,0.2)', fontSize: 13, color: 'rgba(var(--rgb-fg),0.7)', lineHeight: 1.6, marginBottom: 10 }}>
+            <div style={{ padding: '12px 14px', borderRadius: 10, background: 'rgba(10,102,194,0.08)', border: '1px solid rgba(10,102,194,0.2)', fontSize: 13, color: 'var(--text-2)', lineHeight: 1.6, marginBottom: 10 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, color: '#0A66C2', fontWeight: 600 }}>
                 <Monitor size={14} /> {t('Desktop')}
               </div>
@@ -156,8 +156,8 @@ export default function LinkedInImportDialog({ onClose }: Props) {
             </div>
 
             {/* Mobile instructions */}
-            <div style={{ padding: '12px 14px', borderRadius: 10, background: 'rgba(255,159,10,0.06)', border: '1px solid rgba(255,159,10,0.2)', fontSize: 13, color: 'rgba(var(--rgb-fg),0.7)', lineHeight: 1.6, marginBottom: 16 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, color: '#FF9F0A', fontWeight: 600 }}>
+            <div style={{ padding: '12px 14px', borderRadius: 10, background: 'rgba(255,159,10,0.06)', border: '1px solid rgba(255,159,10,0.2)', fontSize: 13, color: 'var(--text-2)', lineHeight: 1.6, marginBottom: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, color: 'var(--ios-amber)', fontWeight: 600 }}>
                 <Smartphone size={14} /> {t('Mobile')}
               </div>
               <ol style={{ margin: 0, padding: '0 0 0 18px', display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -184,13 +184,13 @@ export default function LinkedInImportDialog({ onClose }: Props) {
             </div>
 
             {!text.trim() && !error && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'rgba(var(--rgb-fg),0.4)', marginBottom: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--text-4)', marginBottom: 12 }}>
                 <AlertCircle size={12} /> {t('Füge den kopierten LinkedIn-Text ein, um fortzufahren.')}
               </div>
             )}
 
             {error && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#FF453A', marginBottom: 12, padding: '8px 10px', background: 'rgba(255,69,58,0.08)', borderRadius: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--ios-red)', marginBottom: 12, padding: '8px 10px', background: 'rgba(255,69,58,0.08)', borderRadius: 8 }}>
                 <AlertCircle size={12} /> {error}
               </div>
             )}
@@ -198,7 +198,7 @@ export default function LinkedInImportDialog({ onClose }: Props) {
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
               <button className="btn-glass" onClick={onClose} style={{ fontSize: 13 }}>{t('Abbrechen')}</button>
               <button className="btn-glass btn-primary" onClick={handleParse} disabled={!text.trim() || loading} style={{ fontSize: 13, gap: 6 }}>
-                {loading ? <><Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> {t('KI analysiert…')}</> : t('Importieren')}
+                {loading ? <><Loader2 data-motion="essential" size={14} style={{ animation: 'spin 1s linear infinite' }} /> {t('KI analysiert…')}</> : t('Importieren')}
               </button>
             </div>
           </>
@@ -207,8 +207,8 @@ export default function LinkedInImportDialog({ onClose }: Props) {
         {step === 2 && parsed && (
           <>
             <div style={{ padding: '12px 14px', borderRadius: 10, background: 'rgba(52,199,89,0.08)', border: '1px solid rgba(52,199,89,0.2)', fontSize: 13, marginBottom: 16 }}>
-              <strong style={{ color: '#34C759', display: 'block', marginBottom: 8 }}>✓ {t('KI hat extrahiert')}</strong>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 5, color: 'rgba(var(--rgb-fg),0.75)' }}>
+              <strong style={{ color: 'var(--ios-green)', display: 'block', marginBottom: 8 }}>✓ {t('KI hat extrahiert')}</strong>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 5, color: 'var(--text-2)' }}>
                 {(parsed.firstName || parsed.lastName) && (
                   <div style={{ display: 'flex', gap: 8 }}>
                     <span style={{ opacity: 0.5, minWidth: 110 }}>{t('Name')}:</span>
@@ -243,12 +243,12 @@ export default function LinkedInImportDialog({ onClose }: Props) {
             </div>
 
             {parsed.workExperiences.length === 0 && parsed.educations.length === 0 && parsed.skills.length === 0 && !parsed.firstName && (
-              <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(255,159,10,0.08)', border: '1px solid rgba(255,159,10,0.25)', fontSize: 12, color: '#FF9F0A', marginBottom: 14 }}>
+              <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(255,159,10,0.08)', border: '1px solid rgba(255,159,10,0.25)', fontSize: 12, color: 'var(--ios-amber)', marginBottom: 14 }}>
                 {t('Es konnten keine Daten erkannt werden. Stelle sicher, dass du den vollständigen LinkedIn-Profiltext eingefügt hast.')}
               </div>
             )}
 
-            <p style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.4)', margin: '0 0 16px', lineHeight: 1.55 }}>
+            <p style={{ fontSize: 12, color: 'var(--text-4)', margin: '0 0 16px', lineHeight: 1.55 }}>
               {t('Die Daten werden zu deinem aktuellen Lebenslauf hinzugefügt (bestehende Einträge bleiben erhalten).')}
             </p>
 

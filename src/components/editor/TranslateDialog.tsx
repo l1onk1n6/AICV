@@ -137,7 +137,7 @@ export default function TranslateDialog({ onClose }: { onClose: () => void }) {
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: 15 }}>{t('Lebenslauf übersetzen')}</div>
-              <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)' }}>{t('Alle Textfelder werden übersetzt')}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-4)' }}>{t('Alle Textfelder werden übersetzt')}</div>
             </div>
           </div>
           <button className="btn-glass btn-icon" onClick={onClose} style={{ padding: 6 }}><X size={14} /></button>
@@ -180,7 +180,7 @@ export default function TranslateDialog({ onClose }: { onClose: () => void }) {
               )}
             </div>
 
-            <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.4)', marginBottom: 16, padding: '8px 12px', background: 'rgba(var(--rgb-fg),0.04)', borderRadius: 8 }}>
+            <div style={{ fontSize: 12, color: 'var(--text-4)', marginBottom: 16, padding: '8px 12px', background: 'rgba(var(--rgb-fg),0.04)', borderRadius: 8 }}>
               {t('Übersetzt: Zusammenfassung, Berufserfahrung, Ausbildung, Projekte, eigene Sektionen, Anschreiben. Namen, Daten und Kontaktdaten bleiben unverändert.')}
             </div>
 
@@ -189,7 +189,7 @@ export default function TranslateDialog({ onClose }: { onClose: () => void }) {
             <button className="btn-glass btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '11px', fontWeight: 700 }}
               onClick={handleTranslate} disabled={loading || (!targetLang.trim())}>
               {loading
-                ? <><Loader2 size={15} style={{ animation: 'spin 1s linear infinite' }} /> {t('Übersetze…')}</>
+                ? <><Loader2 data-motion="essential" size={15} style={{ animation: 'spin 1s linear infinite' }} /> {t('Übersetze…')}</>
                 : <><Languages size={15} /> {t('Jetzt übersetzen')}</>}
             </button>
           </>

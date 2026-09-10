@@ -39,14 +39,14 @@ export default function EmptyState({
 
       <h4 style={{
         margin: '0 0 6px', fontSize: compact ? 14 : 15, fontWeight: 600,
-        color: 'rgba(var(--rgb-fg),0.85)',
+        color: 'var(--text-1)',
       }}>
         {title}
       </h4>
 
       {description && (
         <p style={{
-          margin: '0 auto', fontSize: 12, color: 'rgba(var(--rgb-fg),0.5)',
+          margin: '0 auto', fontSize: 12, color: 'var(--text-4)',
           maxWidth: 340, lineHeight: 1.5, marginBottom: (ctaLabel || secondaryCtaLabel) ? 16 : 0,
         }}>
           {description}

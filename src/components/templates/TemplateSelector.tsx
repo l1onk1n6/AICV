@@ -82,7 +82,7 @@ export default function TemplateSelector() {
 
                 {/* Info */}
                 <div style={{ fontWeight: 600, fontSize: 13, marginBottom: 3 }}>{tmpl.name}</div>
-                <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.5)', marginBottom: 6, lineHeight: 1.3 }}>
+                <div style={{ fontSize: 11, color: 'var(--text-4)', marginBottom: 6, lineHeight: 1.3 }}>
                   {t(tmpl.description)}
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
