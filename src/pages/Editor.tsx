@@ -79,7 +79,7 @@ export default function Editor() {
       <div className="glass-card animate-fade-in" style={{ padding: '48px 32px', textAlign: 'center', margin: 'auto' }}>
         <AlertCircle size={40} style={{ margin: '0 auto 16px', opacity: 0.5 }} />
         <h3 style={{ margin: '0 0 8px', fontSize: 18, fontWeight: 600 }}>{t('Kein Lebenslauf ausgewählt')}</h3>
-        <p style={{ color: 'rgba(var(--rgb-fg),0.5)', marginBottom: 20 }}>
+        <p style={{ color: 'var(--text-4)', marginBottom: 20 }}>
           Wählen Sie eine Person in der Seitenleiste oder legen Sie eine neue an.
         </p>
         <button className="btn-glass btn-primary" onClick={() => navigate('/')}>
@@ -111,10 +111,10 @@ export default function Editor() {
     return (
       <div className="glass-card animate-fade-in" style={{ padding: '48px 32px', textAlign: 'center', margin: 'auto', maxWidth: 400 }}>
         <div style={{ width: 56, height: 56, borderRadius: 16, background: 'rgba(255,159,10,0.15)', border: '1px solid rgba(255,159,10,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-          <Lock size={24} style={{ color: '#FF9F0A' }} />
+          <Lock size={24} style={{ color: 'var(--ios-amber)' }} />
         </div>
         <h3 style={{ margin: '0 0 8px', fontSize: 18, fontWeight: 700 }}>{t('Mappe eingefroren')}</h3>
-        <p style={{ color: 'rgba(var(--rgb-fg),0.5)', fontSize: 13, marginBottom: 20 }}>
+        <p style={{ color: 'var(--text-4)', fontSize: 13, marginBottom: 20 }}>
           {t('«{name}» überschreitet dein Free-Limit von {n} Mappen. Upgrade auf Pro oder lösche andere Mappen um diese wieder zu bearbeiten.')
             .replace('{name}', resume.name || t('Bewerbungsmappe'))
             .replace('{n}', String(limits.resumes))}
@@ -124,7 +124,7 @@ export default function Editor() {
           <button
             className="btn-glass"
             onClick={() => navigate('/account')}
-            style={{ background: 'linear-gradient(135deg, rgba(255,159,10,0.3), rgba(255,55,95,0.2))', border: '1px solid rgba(255,159,10,0.4)', color: '#FF9F0A', fontWeight: 700 }}
+            style={{ background: 'linear-gradient(135deg, rgba(255,159,10,0.3), rgba(255,55,95,0.2))', border: '1px solid rgba(255,159,10,0.4)', color: 'var(--ios-amber)', fontWeight: 700 }}
           >
             Upgrade auf Pro
           </button>
@@ -217,7 +217,7 @@ export default function Editor() {
                     style={{
                       background: 'rgba(var(--rgb-fg),0.06)', border: '1px solid var(--border-subtle)',
                       borderRadius: 4, padding: 1, cursor: i === 0 ? 'not-allowed' : 'pointer',
-                      opacity: i === 0 ? 0.3 : 0.85, color: 'rgba(var(--rgb-fg),0.85)',
+                      opacity: i === 0 ? 0.3 : 0.85, color: 'var(--text-1)',
                     }}
                   >
                     <ArrowUp size={11} />
@@ -229,7 +229,7 @@ export default function Editor() {
                     style={{
                       background: 'rgba(var(--rgb-fg),0.06)', border: '1px solid var(--border-subtle)',
                       borderRadius: 4, padding: 1, cursor: i === orderedSections.length - 1 ? 'not-allowed' : 'pointer',
-                      opacity: i === orderedSections.length - 1 ? 0.3 : 0.85, color: 'rgba(var(--rgb-fg),0.85)',
+                      opacity: i === orderedSections.length - 1 ? 0.3 : 0.85, color: 'var(--text-1)',
                     }}
                   >
                     <ArrowDown size={11} />

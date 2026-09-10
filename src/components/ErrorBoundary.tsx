@@ -39,12 +39,12 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
             background: 'rgba(255,59,48,0.18)', border: '1px solid rgba(255,59,48,0.4)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <AlertCircle size={26} style={{ color: '#FF453A' }} />
+            <AlertCircle size={26} style={{ color: '#FF6B6B' }} />
           </div>
           <h1 style={{ fontSize: 20, fontWeight: 700, margin: '0 0 10px' }}>
             Da ist etwas schiefgelaufen
           </h1>
-          <p style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.65)', lineHeight: 1.6, margin: '0 0 22px' }}>
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, margin: '0 0 22px' }}>
             Wir haben den Fehler automatisch gemeldet und schauen ihn uns an. Lade die Seite neu,
             um weiterzumachen. Falls das Problem bestehen bleibt, melde dich bitte bei uns unter{' '}
             <a href={`mailto:${SUPPORT_EMAIL}`} style={{ color: '#64B5F6' }}>{SUPPORT_EMAIL}</a>.

@@ -71,11 +71,11 @@ export default function ShareModal({ resumeId, token, onClose }: Props) {
 
         {!shareUrl ? (
           <>
-            <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.5)', marginBottom: 14 }}>
+            <p style={{ fontSize: 13, color: 'var(--text-4)', marginBottom: 14 }}>
               Erstelle einen öffentlichen Link — der Lebenslauf ist ohne Login einsehbar.
             </p>
             {atShareLimit ? (
-              <div style={{ fontSize: 12, color: '#FF9F0A', background: 'rgba(255,159,10,0.1)', border: '1px solid rgba(255,159,10,0.25)', borderRadius: 8, padding: '10px 12px' }}>
+              <div style={{ fontSize: 12, color: 'var(--ios-amber)', background: 'rgba(255,159,10,0.1)', border: '1px solid rgba(255,159,10,0.25)', borderRadius: 8, padding: '10px 12px' }}>
                 Share-Link-Limit erreicht ({limits.shareLinks}/{limits.shareLinks}). Deaktiviere einen anderen Link oder upgrade auf Pro.
               </div>
             ) : (
@@ -104,12 +104,12 @@ export default function ShareModal({ resumeId, token, onClose }: Props) {
               gap: 12, padding: '10px 12px', marginBottom: 12,
               background: 'var(--bg-btn)', border: '1px solid var(--border-subtle)',
               borderRadius: 'var(--radius-sm)', fontSize: 12,
-              color: 'rgba(var(--rgb-fg), 0.75)',
+              color: 'var(--text-2)',
             }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <Eye size={14} /> {views} Aufruf{views === 1 ? '' : 'e'}
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(var(--rgb-fg), 0.55)' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-3)' }}>
                 <Clock size={14} /> {lastViewedAt ? relativeTime(lastViewedAt) : t('Noch nicht aufgerufen')}
               </span>
             </div>

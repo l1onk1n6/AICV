@@ -33,7 +33,7 @@ function CompletenessBar({ score, label }: { score: number; label: string }) {
   const color = completenessColor(score);
   return (
     <div title={`${label}: ${score}%`} style={{ marginBottom: 10 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 11, color: 'rgba(var(--rgb-fg),0.45)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 11, color: 'var(--text-4)' }}>
         <span>{label}</span>
         <span style={{ color, fontWeight: 600 }}>{score}%</span>
       </div>
@@ -76,8 +76,11 @@ export default function Dashboard() {
   const [menuOpenResumeId, setMenuOpenResumeId] = useState<string | null>(null);
   const [atsForResumeId, setAtsForResumeId] = useState<string | null>(null);
   const [showAtsUpgrade, setShowAtsUpgrade] = useState(false);
+  const [showPersonUpgrade, setShowPersonUpgrade] = useState(false);
   const [menuPos, setMenuPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const menuBtnRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  const personLimitErreicht = persons.length >= limits.persons;
 
   // Persons beyond the plan limit are frozen (read-only)
   const frozenPersonIds = new Set(
@@ -171,6 +174,7 @@ export default function Dashboard() {
       {/* ATS-Dialog (per-Mappe) */}
       {atsForResumeId && <AtsDialog onClose={() => setAtsForResumeId(null)} />}
       {showAtsUpgrade && <UpgradeModal highlightId="ats" onClose={() => setShowAtsUpgrade(false)} />}
+      {showPersonUpgrade && <UpgradeModal highlightId="persons" onClose={() => setShowPersonUpgrade(false)} />}
 
       {/* Limit error toast */}
       {limitError && (
@@ -217,7 +221,7 @@ export default function Dashboard() {
         const itemStyle: React.CSSProperties = {
           display: 'flex', alignItems: 'center', gap: 10, width: '100%',
           padding: '10px 13px', fontSize: 13, background: 'none', border: 'none',
-          color: 'rgba(var(--rgb-fg),0.85)', cursor: 'pointer', borderRadius: 8,
+          color: 'var(--text-1)', cursor: 'pointer', borderRadius: 8,
           fontFamily: 'var(--font-sf)', textDecoration: 'none', textAlign: 'left',
           transition: 'background 0.12s',
         };
@@ -237,7 +241,7 @@ export default function Dashboard() {
                 boxShadow: '0 12px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(var(--rgb-fg),0.06)',
                 animation: 'scaleIn 0.15s cubic-bezier(0.34,1.56,0.64,1) both',
               }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: 'rgba(var(--rgb-fg),0.35)', padding: '6px 12px 4px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-4)', padding: '6px 12px 4px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                 {mr.name || t('Bewerbungsmappe')}
               </div>
               <div style={{ height: 1, background: 'rgba(var(--rgb-fg),0.07)', margin: '4px 0' }} />
@@ -257,7 +261,7 @@ export default function Dashboard() {
                     setAtsForResumeId(mr.id);
                   } },
               ] as { icon: React.ComponentType<{size:number}>, label: string, color?: string, action: () => void }[]).map(({ icon: Icon, label, color, action }) => (
-                <button key={label} style={{ ...itemStyle, color: color ?? 'rgba(var(--rgb-fg),0.85)' }}
+                <button key={label} style={{ ...itemStyle, color: color ?? 'var(--text-2)' }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(var(--rgb-fg),0.07)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'none')}
                   onClick={action}>
@@ -316,11 +320,11 @@ export default function Dashboard() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
               <div>
                 <div style={{ fontSize: isMobile ? 20 : 26, fontWeight: 700, letterSpacing: '-1px' }}>{value}</div>
-                <div style={{ fontSize: isMobile ? 10 : 12, color: 'rgba(var(--rgb-fg),0.5)', marginTop: 2 }}>{t(label)}</div>
+                <div style={{ fontSize: isMobile ? 10 : 12, color: 'var(--text-4)', marginTop: 2 }}>{t(label)}</div>
               </div>
               <div style={{
                 width: isMobile ? 32 : 40, height: isMobile ? 32 : 40, borderRadius: isMobile ? 8 : 12,
-                background: `${color}25`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                background: `color-mix(in srgb, ${color} 15%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
               }}>
                 <Icon size={isMobile ? 15 : 18} style={{ color }} />
               </div>
@@ -341,14 +345,29 @@ export default function Dashboard() {
           >
             {bulkMode ? <CheckSquare size={14} /> : <Square size={14} />} {!isMobile && t('Auswählen')}
           </button>
-          <button
-            className="btn-glass btn-primary btn-sm"
-            style={{ flexShrink: 0, opacity: persons.length >= limits.persons ? 0.5 : 1 }}
-            onClick={() => { if (persons.length >= limits.persons) { clearLimitError(); } else { setShowAdd(true); } }}
-            title={persons.length >= limits.persons ? `Limit erreicht (${limits.persons} Personen)` : undefined}
-          >
-            <Plus size={14} /> {!isMobile && t('Neue ')}{t('Person')}
-          </button>
+          {/* Am Plan-Limit rief der Knopf nur clearLimitError() auf: sichtbar
+              passierte nichts, und die halbe Deckkraft liess ihn kaputt statt
+              gesperrt aussehen. Jetzt oeffnet er denselben Upgrade-Dialog, den
+              die App auch beim ATS-Score zeigt, und traegt ein Schloss statt
+              eines Plus. */}
+          {personLimitErreicht ? (
+            <button
+              className="btn-glass btn-sm"
+              style={{ flexShrink: 0, background: 'color-mix(in srgb, var(--ios-amber) 14%, transparent)', border: '1px solid color-mix(in srgb, var(--ios-amber) 40%, transparent)', color: 'var(--ios-amber)', fontWeight: 600 }}
+              onClick={() => setShowPersonUpgrade(true)}
+              title={t('Im Free-Plan ist eine Person möglich — auf Pro upgraden für mehr')}
+            >
+              <Lock size={13} /> {!isMobile && t('Neue ')}{t('Person')}
+            </button>
+          ) : (
+            <button
+              className="btn-glass btn-primary btn-sm"
+              style={{ flexShrink: 0 }}
+              onClick={() => setShowAdd(true)}
+            >
+              <Plus size={14} /> {!isMobile && t('Neue ')}{t('Person')}
+            </button>
+          )}
         </div>
       </div>
 
@@ -363,7 +382,7 @@ export default function Dashboard() {
                 placeholder={t("Personen oder Mappen suchen…")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ width: '100%', paddingLeft: 30, fontSize: 13 }}
+                style={{ width: '100%', paddingLeft: 30 }}
               />
             </div>
           )}
@@ -401,7 +420,7 @@ export default function Dashboard() {
               <h3 style={{ margin: '0 0 8px', fontSize: isMobile ? 20 : 24, fontWeight: 700, letterSpacing: '-0.5px' }}>
                 Willkommen bei PATH
               </h3>
-              <p style={{ color: 'rgba(var(--rgb-fg),0.55)', fontSize: 14, marginBottom: 24, maxWidth: 420, marginLeft: 'auto', marginRight: 'auto' }}>
+              <p style={{ color: 'var(--text-3)', fontSize: 14, marginBottom: 24, maxWidth: 420, marginLeft: 'auto', marginRight: 'auto' }}>
                 In 3 Schritten zu deinem Lebenslauf — alles synchronisiert, mehrere Mappen pro Person, native PDF-Exporte.
               </p>
 
@@ -421,12 +440,12 @@ export default function Dashboard() {
                       <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,122,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Icon size={16} style={{ color: 'var(--ios-blue)' }} />
                       </div>
-                      <div style={{ position: 'absolute', top: -4, right: -4, width: 18, height: 18, borderRadius: '50%', background: '#007AFF', color: '#fff', fontSize: 10, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ position: 'absolute', top: -4, right: -4, width: 18, height: 18, borderRadius: '50%', background: 'var(--ios-blue)', color: '#fff', fontSize: 10, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         {n}
                       </div>
                     </div>
                     <div style={{ fontSize: 13, fontWeight: 600 }}>{title}</div>
-                    <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.45)', lineHeight: 1.4 }}>{desc}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-4)', lineHeight: 1.4 }}>{desc}</div>
                   </div>
                 ))}
               </div>
@@ -434,7 +453,7 @@ export default function Dashboard() {
               <button className="btn-glass btn-primary" onClick={() => setShowAdd(true)} style={{ padding: '11px 22px', fontSize: 14, fontWeight: 600 }}>
                 <Plus size={16} /> Jetzt starten
               </button>
-              <div style={{ marginTop: 10, fontSize: 11, color: 'rgba(var(--rgb-fg),0.35)' }}>
+              <div style={{ marginTop: 10, fontSize: 11, color: 'var(--text-4)' }}>
                 Kostenlos · 1 Person · 2 Mappen · keine Kreditkarte
               </div>
             </div>
@@ -479,17 +498,17 @@ export default function Dashboard() {
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span style={{ fontWeight: 700, fontSize: 15, color: isPersonFrozen ? '#FF9F0A' : undefined }}>{person.name}</span>
+                        <span style={{ fontWeight: 700, fontSize: 15, color: isPersonFrozen ? 'var(--ios-amber)' : undefined }}>{person.name}</span>
                         {isPersonFrozen && (
-                          <span style={{ fontSize: 9, fontWeight: 700, padding: '1px 5px', borderRadius: 4, background: 'rgba(255,159,10,0.2)', border: '1px solid rgba(255,159,10,0.4)', color: '#FF9F0A', flexShrink: 0 }}>
+                          <span style={{ fontSize: 9, fontWeight: 700, padding: '1px 5px', borderRadius: 4, background: 'rgba(255,159,10,0.2)', border: '1px solid rgba(255,159,10,0.4)', color: 'var(--ios-amber)', flexShrink: 0 }}>
                             {t('EINGEFROREN')}
                           </span>
                         )}
                       </div>
                       {isPersonFrozen ? (
-                        <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.35)', marginTop: 2 }}>{t('Upgrade auf Pro zum Bearbeiten')}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>{t('Upgrade auf Pro zum Bearbeiten')}</div>
                       ) : personResumes[0]?.personalInfo.title ? (
-                        <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.5)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <div style={{ fontSize: 12, color: 'var(--text-4)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           {personResumes[0].personalInfo.title}
                         </div>
                       ) : null}
@@ -500,7 +519,7 @@ export default function Dashboard() {
                       </div>
                     )}
                     {isPersonFrozen && (
-                      <Lock size={16} style={{ color: '#FF9F0A', flexShrink: 0 }} />
+                      <Lock size={16} style={{ color: 'var(--ios-amber)', flexShrink: 0 }} />
                     )}
                   </div>
 
@@ -512,7 +531,7 @@ export default function Dashboard() {
                       const frozen = frozenResumeIds.has(r.id);
                       const statusColor = APPLICATION_STATUS_COLORS[r.status ?? 'entwurf'];
                       const deadlineDiff = r.deadline ? (new Date(r.deadline).getTime() - Date.now()) / 86400000 : null;
-                      const deadlineColor = deadlineDiff === null ? undefined : deadlineDiff < 0 ? 'var(--ios-red)' : deadlineDiff <= 7 ? '#FF9F0A' : 'rgba(var(--rgb-fg),0.4)';
+                      const deadlineColor = deadlineDiff === null ? undefined : deadlineDiff < 0 ? 'var(--ios-red)' : deadlineDiff <= 7 ? 'var(--ios-amber)' : 'var(--text-4)';
 
                       if (renamingResumeId === r.id && !frozen && !isPersonFrozen) {
                         return (
@@ -561,11 +580,11 @@ export default function Dashboard() {
                             {bulkMode && !frozen && (
                               isSelected
                                 ? <CheckSquare size={14} style={{ color: 'var(--ios-blue)', flexShrink: 0 }} />
-                                : <Square size={14} style={{ color: 'rgba(var(--rgb-fg),0.4)', flexShrink: 0 }} />
+                                : <Square size={14} style={{ color: 'var(--text-4)', flexShrink: 0 }} />
                             )}
                             {/* Frozen icon or status dot */}
                             {frozen
-                              ? <Lock size={12} style={{ color: '#FF9F0A', flexShrink: 0 }} />
+                              ? <Lock size={12} style={{ color: 'var(--ios-amber)', flexShrink: 0 }} />
                               : <span title={t('Status: {status} – klicken zum Ändern').replace('{status}', t(APPLICATION_STATUS_LABELS[r.status ?? 'entwurf']))}
                                   style={{ width: 11, height: 11, borderRadius: '50%', background: statusColor, flexShrink: 0, cursor: 'pointer' }}
                                   onClick={(e) => { e.stopPropagation(); if (!bulkMode) setStatusMenuResumeId(r.id); }} />
@@ -575,11 +594,11 @@ export default function Dashboard() {
                             {/* Name + meta */}
                             <div style={{ flex: 1, minWidth: 0 }}>
                               <div style={{ display: 'flex', alignItems: 'center', gap: 6, overflow: 'hidden' }}>
-                                <span style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: frozen ? '#FF9F0A' : isActiveResume ? 'var(--ios-blue)' : undefined }}>
+                                <span style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: frozen ? 'var(--ios-amber)' : isActiveResume ? 'var(--ios-blue)' : undefined }}>
                                   {r.name || t('Bewerbungsmappe')}
                                 </span>
                                 {frozen && (
-                                  <span style={{ fontSize: 9, fontWeight: 700, padding: '1px 5px', borderRadius: 4, background: 'rgba(255,159,10,0.2)', border: '1px solid rgba(255,159,10,0.4)', color: '#FF9F0A', flexShrink: 0 }}>
+                                  <span style={{ fontSize: 9, fontWeight: 700, padding: '1px 5px', borderRadius: 4, background: 'rgba(255,159,10,0.2)', border: '1px solid rgba(255,159,10,0.4)', color: 'var(--ios-amber)', flexShrink: 0 }}>
                                     {t('EINGEFROREN')}
                                   </span>
                                 )}
@@ -593,7 +612,7 @@ export default function Dashboard() {
                                 </div>
                               )}
                               {frozen && (
-                                <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.35)', marginTop: 2 }}>
+                                <div style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 2 }}>
                                   {t('Upgrade auf Pro zum Bearbeiten')}
                                 </div>
                               )}
@@ -648,7 +667,7 @@ export default function Dashboard() {
                       />
                     ) : !isPersonFrozen ? (
                       <div title={t("Neue Bewerbungsmappe")}
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '8px 12px', borderRadius: 10, fontSize: 13, border: '1px dashed rgba(var(--rgb-fg),0.2)', background: 'rgba(var(--rgb-fg),0.03)', cursor: 'pointer', opacity: 0.6, color: 'rgba(var(--rgb-fg),0.6)' }}
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '8px 12px', borderRadius: 10, fontSize: 13, border: '1px dashed rgba(var(--rgb-fg),0.2)', background: 'rgba(var(--rgb-fg),0.03)', cursor: 'pointer', opacity: 0.6, color: 'var(--text-3)' }}
                         onClick={(e) => { e.stopPropagation(); setAddingResumeForPersonId(person.id); setNewResumeName(''); }}>
                         <FolderPlus size={15} /> {t('Neue Bewerbungsmappe')}
                       </div>
@@ -660,7 +679,7 @@ export default function Dashboard() {
                   {/* Person actions */}
                   <div style={{ display: 'flex', gap: 8 }}>
                     {isPersonFrozen ? (
-                      <button className="btn-glass btn-sm" style={{ flex: 1, opacity: 0.5, cursor: 'not-allowed', color: '#FF9F0A' }} disabled>
+                      <button className="btn-glass btn-sm" style={{ flex: 1, opacity: 0.5, cursor: 'not-allowed', color: 'var(--ios-amber)' }} disabled>
                         <Lock size={14} /> {t('Eingefroren')}
                       </button>
                     ) : (
@@ -687,7 +706,7 @@ export default function Dashboard() {
           </div>
 
           {searchQuery && filteredPersons.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '32px 0', color: 'rgba(var(--rgb-fg),0.4)', fontSize: 14 }}>
+            <div style={{ textAlign: 'center', padding: '32px 0', color: 'var(--text-4)', fontSize: 14 }}>
               Keine Ergebnisse für „{searchQuery}"
             </div>
           )}

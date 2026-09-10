@@ -58,9 +58,9 @@ export default function SkillsEditor() {
 
         {skills.length > 0 && (
           <div style={{ display: 'flex', gap: 10, paddingLeft: isMobile ? 32 : 22, paddingRight: 38, marginBottom: 4 }}>
-            <span style={{ flex: 2, fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(var(--rgb-fg),0.35)' }}>{t('Fähigkeit')}</span>
-            <span style={{ flex: 1, fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(var(--rgb-fg),0.35)' }}>{t('Kategorie')}</span>
-            <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(var(--rgb-fg),0.35)', minWidth: 114 }}>{t('Niveau')}</span>
+            <span style={{ flex: 2, fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-4)' }}>{t('Fähigkeit')}</span>
+            <span style={{ flex: 1, fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-4)' }}>{t('Kategorie')}</span>
+            <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-4)', minWidth: 114 }}>{t('Niveau')}</span>
           </div>
         )}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -124,7 +124,7 @@ export default function SkillsEditor() {
                     />
                   ))}
                 </div>
-                <span style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.45)', minWidth: 70 }}>
+                <span style={{ fontSize: 11, color: 'var(--text-4)', minWidth: 70 }}>
                   {t(LEVEL_LABELS[skill.level - 1])}
                 </span>
                 <button
@@ -163,8 +163,8 @@ export default function SkillsEditor() {
 
         {languages.length > 0 && (
           <div style={{ display: 'flex', gap: 10, paddingLeft: isMobile ? 32 : 22, paddingRight: 38, marginBottom: 4 }}>
-            <span style={{ flex: 2, fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(var(--rgb-fg),0.35)' }}>{t('Sprache')}</span>
-            <span style={{ flex: 1, fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(var(--rgb-fg),0.35)' }}>{t('Niveau')}</span>
+            <span style={{ flex: 2, fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-4)' }}>{t('Sprache')}</span>
+            <span style={{ flex: 1, fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-4)' }}>{t('Niveau')}</span>
             <span style={{ width: 166, flexShrink: 0 }} />
           </div>
         )}

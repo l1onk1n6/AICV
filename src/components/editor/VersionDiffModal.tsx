@@ -41,7 +41,7 @@ export default function VersionDiffModal({ version, current, onClose }: Props) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: '1px solid var(--border-subtle)' }}>
           <div>
             <div style={{ fontSize: 15, fontWeight: 700 }}>{t('Änderungen seit dieser Version')}</div>
-            <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg), 0.5)', marginTop: 2 }}>
+            <div style={{ fontSize: 12, color: 'var(--text-4)', marginTop: 2 }}>
               {version.label || new Date(version.created_at).toLocaleString('de-CH')}
             </div>
           </div>
@@ -49,7 +49,7 @@ export default function VersionDiffModal({ version, current, onClose }: Props) {
             onClick={onClose}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              color: 'rgba(var(--rgb-fg), 0.5)', padding: 4, display: 'flex',
+              color: 'var(--text-4)', padding: 4, display: 'flex',
             }}
           >
             <X size={18} />
@@ -58,7 +58,7 @@ export default function VersionDiffModal({ version, current, onClose }: Props) {
 
         <div style={{ flex: 1, overflow: 'auto', padding: '14px 20px 20px' }}>
           {diff.totalChanges === 0 ? (
-            <div style={{ padding: '32px 0', textAlign: 'center', color: 'rgba(var(--rgb-fg), 0.5)', fontSize: 13 }}>
+            <div style={{ padding: '32px 0', textAlign: 'center', color: 'var(--text-4)', fontSize: 13 }}>
               Keine Änderungen seit dieser Version.
             </div>
           ) : (
@@ -68,7 +68,7 @@ export default function VersionDiffModal({ version, current, onClose }: Props) {
                 <div key={l.label} style={{ marginBottom: 14 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                     <div style={{ fontSize: 13, fontWeight: 600 }}>{l.label}</div>
-                    <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg), 0.5)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--text-4)' }}>
                       {l.before} → {l.after}
                     </div>
                   </div>

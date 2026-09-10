@@ -168,7 +168,7 @@ export default function Preview() {
             <div style={{ height: 40, borderRadius: 6, background: tmpl.preview, marginBottom: 6 }} />
             <div style={{ fontSize: 11, fontWeight: isSelected ? 700 : 500, textAlign: 'left', display: 'flex', alignItems: 'center', gap: 4 }}>
               {tmpl.name}
-              {locked && <span style={{ fontSize: 8, fontWeight: 800, padding: '1px 4px', borderRadius: 3, background: 'linear-gradient(135deg, #FF9F0A, #FF375F)', color: '#fff' }}>PRO</span>}
+              {locked && <span style={{ fontSize: 8, fontWeight: 800, padding: '1px 4px', borderRadius: 3, background: 'linear-gradient(135deg, #FF9F0A, #FF375F)', color: '#1c1c1e' }}>PRO</span>}
             </div>
             {isSelected && (
               <div style={{
@@ -234,8 +234,8 @@ export default function Preview() {
               </button>
             )}
             {previewBuilding && (
-              <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'rgba(var(--rgb-fg),0.5)' }}>
-                <Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} />
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--text-4)' }}>
+                <Loader2 data-motion="essential" size={12} style={{ animation: 'spin 1s linear infinite' }} />
                 Vorschau aktualisieren…
               </span>
             )}
@@ -243,7 +243,7 @@ export default function Preview() {
 
           <div style={{ display: 'flex', gap: 6, alignItems: 'center', position: 'relative' }}>
             {!isMobile && limits.pdfExportsPerMonth !== Infinity && (
-              <span style={{ fontSize: 10, color: 'rgba(var(--rgb-fg),0.35)', whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: 10, color: 'var(--text-4)', whiteSpace: 'nowrap' }}>
                 {getPdfExportCount()}/{limits.pdfExportsPerMonth} PDF
               </span>
             )}
@@ -269,7 +269,7 @@ export default function Preview() {
               style={{ opacity: exporting ? 0.7 : 1, display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px' }}
             >
               {exporting
-                ? <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} />
+                ? <Loader2 data-motion="essential" size={16} style={{ animation: 'spin 1s linear infinite' }} />
                 : <Download size={16} />
               }
               {!isMobile && ' Download'}

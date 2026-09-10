@@ -34,20 +34,20 @@ function SaveStatusPill({ isMobile }: { isMobile?: boolean }) {
 
   let Icon: typeof Cloud = Cloud;
   let text = t('Synchronisiert');
-  let color = 'rgba(var(--rgb-fg),0.45)';
+  let color = 'var(--text-4)';
   let bg = 'transparent';
   let border = '1px solid transparent';
 
   if (!cloudOn) {
-    Icon = CloudOff; text = t('Lokal'); color = 'rgba(var(--rgb-fg),0.4)';
+    Icon = CloudOff; text = t('Lokal'); color = 'var(--text-4)';
   } else if (syncing) {
-    Icon = Loader2; text = t('Synchronisiert…'); color = '#007AFF';
+    Icon = Loader2; text = t('Synchronisiert…'); color = 'var(--ios-blue)';
     bg = 'rgba(0,122,255,0.1)'; border = '1px solid rgba(0,122,255,0.25)';
   } else if (savePending) {
-    Icon = Loader2; text = t('Speichert…'); color = '#FF9F0A';
+    Icon = Loader2; text = t('Speichert…'); color = 'var(--ios-amber)';
     bg = 'rgba(255,159,10,0.1)'; border = '1px solid rgba(255,159,10,0.25)';
   } else if (justSaved) {
-    Icon = Check; text = t('Gespeichert'); color = '#34C759';
+    Icon = Check; text = t('Gespeichert'); color = 'var(--ios-green)';
     bg = 'rgba(52,199,89,0.12)'; border = '1px solid rgba(52,199,89,0.3)';
   }
 
@@ -64,7 +64,7 @@ function SaveStatusPill({ isMobile }: { isMobile?: boolean }) {
         flexShrink: 0,
       }}
     >
-      <Icon size={12} style={spinning ? { animation: 'spin 1s linear infinite' } : undefined} />
+      <Icon size={12} data-motion={spinning ? 'essential' : undefined} style={spinning ? { animation: 'spin 1s linear infinite' } : undefined} />
       {!isMobile && <span>{text}</span>}
     </div>
   );
@@ -126,7 +126,7 @@ export default function Header({ isMobile, onMenuToggle }: Props) {
             {title}
           </h1>
           {!isMobile && (
-            <p style={{ margin: 0, fontSize: 12, color: 'rgba(var(--rgb-fg),0.5)', marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <p style={{ margin: 0, fontSize: 12, color: 'var(--text-4)', marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {subtitle}
             </p>
           )}
@@ -140,6 +140,7 @@ export default function Header({ isMobile, onMenuToggle }: Props) {
           onClick={() => !isPro && setShowUpgrade(true)}
           style={{
             display: 'flex', alignItems: 'center', gap: 5, padding: '7px 14px', borderRadius: 20,
+            minHeight: 44,
             fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', cursor: isPro ? 'default' : 'pointer',
             background: isPro
               ? 'linear-gradient(135deg, rgba(255,159,10,0.25), rgba(255,55,95,0.2))'
@@ -147,7 +148,7 @@ export default function Header({ isMobile, onMenuToggle }: Props) {
             border: isPro
               ? '1px solid rgba(255,159,10,0.4)'
               : '1px solid rgba(var(--rgb-fg),0.15)',
-            color: isPro ? '#FF9F0A' : 'rgba(var(--rgb-fg),0.45)',
+            color: isPro ? 'var(--ios-amber)' : 'var(--text-4)',
           }}
           title={isPro ? t('PATH Pro — alle Features aktiv') : t('Upgrade auf PATH Pro')}
         >

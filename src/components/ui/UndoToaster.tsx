@@ -47,7 +47,7 @@ export default function UndoToaster() {
               minWidth: 320, maxWidth: '92vw', position: 'relative', overflow: 'hidden',
             }}
           >
-            <div style={{ flex: 1, fontSize: 13, color: 'rgba(var(--rgb-fg),0.9)' }}>
+            <div style={{ flex: 1, fontSize: 13, color: 'var(--text-1)' }}>
               {t.message}
             </div>
             <button
@@ -64,7 +64,7 @@ export default function UndoToaster() {
             <button
               onClick={() => dismiss(t.id)}
               aria-label={tr("Schliessen")}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.4)', padding: 4, display: 'flex' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-4)', padding: 4, display: 'flex' }}
             >
               <X size={14} />
             </button>

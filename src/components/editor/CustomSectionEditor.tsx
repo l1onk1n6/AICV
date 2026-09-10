@@ -21,18 +21,18 @@ export default function CustomSectionEditor() {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 24px', textAlign: 'center', gap: 16 }}>
         {showUpgrade && <UpgradeModal onClose={() => setShowUpgrade(false)} highlightId="custom" />}
         <div style={{ width: 56, height: 56, borderRadius: 16, background: 'rgba(255,159,10,0.15)', border: '1px solid rgba(255,159,10,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Lock size={22} style={{ color: '#FF9F0A' }} />
+          <Lock size={22} style={{ color: 'var(--ios-amber)' }} />
         </div>
         <div>
           <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 6 }}>{t('Eigene Sektionen')}</div>
-          <div style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)', maxWidth: 280 }}>
+          <div style={{ fontSize: 13, color: 'var(--text-4)', maxWidth: 280 }}>
             {t('Erstelle eigene Abschnitte wie Projekte, Publikationen oder Zertifikate — mit PATH Pro.')}
           </div>
         </div>
         <button
           className="btn-glass"
           onClick={() => setShowUpgrade(true)}
-          style={{ padding: '10px 22px', fontWeight: 700, fontSize: 13, background: 'linear-gradient(135deg, rgba(255,159,10,0.3), rgba(255,55,95,0.2))', border: '1px solid rgba(255,159,10,0.4)', color: '#FF9F0A' }}
+          style={{ padding: '10px 22px', fontWeight: 700, fontSize: 13, background: 'linear-gradient(135deg, rgba(255,159,10,0.3), rgba(255,55,95,0.2))', border: '1px solid rgba(255,159,10,0.4)', color: 'var(--ios-amber)' }}
         >
           {t('Upgrade auf Pro')}
         </button>

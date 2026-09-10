@@ -8,8 +8,8 @@ import { useT } from '../../lib/i18n';
 
 const FEATURES = [
   { icon: <FileText size={18} />, color: 'var(--ios-blue)', title: 'Bewerbungsmappen', desc: 'Erstelle für jede Stelle eine eigene Mappe mit Lebenslauf und Anschreiben.' },
-  { icon: <Sparkles size={18} />, color: '#FF9F0A', title: 'KI-Unterstützung', desc: 'Lass dir Anschreiben generieren, Texte verbessern und in andere Sprachen übersetzen.' },
-  { icon: <Share2 size={18} />, color: '#5856D6', title: 'Link teilen & Export', desc: 'Teile deinen Lebenslauf als Link oder exportiere ihn als professionelles PDF.' },
+  { icon: <Sparkles size={18} />, color: 'var(--ios-amber)', title: 'KI-Unterstützung', desc: 'Lass dir Anschreiben generieren, Texte verbessern und in andere Sprachen übersetzen.' },
+  { icon: <Share2 size={18} />, color: 'var(--ios-indigo)', title: 'Link teilen & Export', desc: 'Teile deinen Lebenslauf als Link oder exportiere ihn als professionelles PDF.' },
   { icon: <Bell size={18} />, color: 'var(--ios-green)', title: 'Deadline-Reminder', desc: 'Verpasse keine Bewerbungsfrist — erhalte Erinnerungen per E-Mail.' },
 ];
 
@@ -140,7 +140,7 @@ export default function OnboardingModal({ onClose }: Props) {
             <h1 style={{ fontSize: 24, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px' }}>
               Willkommen bei PATH
             </h1>
-            <p style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.5)', margin: '0 0 28px', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 14, color: 'var(--text-4)', margin: '0 0 28px', lineHeight: 1.6 }}>
               Dein persönlicher Bewerbungsassistent.<br />
               Lass uns in 2 Minuten alles einrichten.
             </p>
@@ -148,7 +148,7 @@ export default function OnboardingModal({ onClose }: Props) {
               onClick={goNext}>
               Loslegen <ArrowRight size={16} />
             </button>
-            <button onClick={skip} style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.3)', fontSize: 12, fontFamily: 'var(--font-sf)' }}>
+            <button onClick={skip} style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-4)', fontSize: 12, fontFamily: 'var(--font-sf)' }}>
               Überspringen
             </button>
           </div>
@@ -160,7 +160,7 @@ export default function OnboardingModal({ onClose }: Props) {
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--ios-blue)', marginBottom: 6 }}>{t('SCHRITT 1 VON 2')}</div>
               <h2 style={{ fontSize: 20, fontWeight: 700, margin: '0 0 6px', letterSpacing: '-0.4px' }}>{t('Wie heisst du?')}</h2>
-              <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)', margin: 0 }}>{t('Wir legen dein erstes Profil an.')}</p>
+              <p style={{ fontSize: 13, color: 'var(--text-4)', margin: 0 }}>{t('Wir legen dein erstes Profil an.')}</p>
             </div>
             <input
               className="input-glass"
@@ -176,7 +176,7 @@ export default function OnboardingModal({ onClose }: Props) {
               onClick={handleCreate}>
               {creating ? t('Erstelle…') : <>{t('Profil anlegen')} <ArrowRight size={15} /></>}
             </button>
-            <button onClick={skip} style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.3)', fontSize: 12, fontFamily: 'var(--font-sf)', width: '100%' }}>
+            <button onClick={skip} style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-4)', fontSize: 12, fontFamily: 'var(--font-sf)', width: '100%' }}>
               Überspringen
             </button>
           </div>
@@ -188,7 +188,7 @@ export default function OnboardingModal({ onClose }: Props) {
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--ios-blue)', marginBottom: 6 }}>{t('SCHRITT 2 VON 2')}</div>
               <h2 style={{ fontSize: 20, fontWeight: 700, margin: '0 0 6px', letterSpacing: '-0.4px' }}>{t('Was PATH kann')}</h2>
-              <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)', margin: 0 }}>
+              <p style={{ fontSize: 13, color: 'var(--text-4)', margin: 0 }}>
                 Ein kurzer Überblick — du findest alles auch später wieder.
               </p>
             </div>
@@ -196,12 +196,12 @@ export default function OnboardingModal({ onClose }: Props) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
               {FEATURES.map(f => (
                 <div key={f.title} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: `${f.color}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: f.color }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: `color-mix(in srgb, ${f.color} 13%, transparent)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: f.color }}>
                     {f.icon}
                   </div>
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 2 }}>{t(f.title)}</div>
-                    <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.45)', lineHeight: 1.5 }}>{t(f.desc)}</div>
+                    <div style={{ fontSize: 12, color: 'var(--text-4)', lineHeight: 1.5 }}>{t(f.desc)}</div>
                   </div>
                 </div>
               ))}
@@ -213,7 +213,7 @@ export default function OnboardingModal({ onClose }: Props) {
                 <Wand2 size={14} style={{ color: 'var(--ios-blue)', flexShrink: 0 }} />
                 <span style={{ fontSize: 13, fontWeight: 600 }}>{t('Mit Beispieldaten starten')}</span>
               </div>
-              <p style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.45)', margin: '0 0 12px', lineHeight: 1.5 }}>
+              <p style={{ fontSize: 12, color: 'var(--text-4)', margin: '0 0 12px', lineHeight: 1.5 }}>
                 Sieh sofort wie dein Lebenslauf aussehen könnte — wir füllen ihn mit realistischen Musterdaten vor.
               </p>
               <button className="btn-glass btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '11px', fontWeight: 700, fontSize: 13, gap: 7 }}
@@ -227,7 +227,7 @@ export default function OnboardingModal({ onClose }: Props) {
               <Check size={14} /> Ohne Beispieldaten starten
             </button>
 
-            <button onClick={skip} style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.3)', fontSize: 12, fontFamily: 'var(--font-sf)', width: '100%' }}>
+            <button onClick={skip} style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-4)', fontSize: 12, fontFamily: 'var(--font-sf)', width: '100%' }}>
               Schliessen
             </button>
           </div>

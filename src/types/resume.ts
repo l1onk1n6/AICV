@@ -155,9 +155,9 @@ export const APPLICATION_STATUS_LABELS: Record<ApplicationStatus, string> = {
 };
 
 export const APPLICATION_STATUS_COLORS: Record<ApplicationStatus, string> = {
-  entwurf:    'rgba(var(--rgb-fg),0.3)',
+  entwurf:    'var(--text-4)',
   gesendet:   'var(--ios-blue)',
-  interview:  'var(--ios-yellow, #FF9F0A)',
+  interview:  'var(--ios-amber)',
   abgelehnt:  'var(--ios-red)',
   angenommen: 'var(--ios-green)',
 };

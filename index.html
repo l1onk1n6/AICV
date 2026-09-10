@@ -2,7 +2,16 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+    <!-- maximum-scale=1.0 ist am 10.09. entfallen. Es kam am 07.04. (76246c8)
+         gegen den iOS-Auto-Zoom beim Antippen von Eingabefeldern — im selben
+         Commit wurde .input-glass dafuer aber bereits auf 16px gesetzt, was
+         allein genuegt. Der Nebeneffekt war, dass sich die Seite mit zwei
+         Fingern gar nicht mehr vergroessern liess.
+         Die Ursache ist jetzt vollstaendig beseitigt: eine Regel in index.css
+         hebt auf (pointer: coarse) jedes input/select/textarea auf 16px —
+         auch die gut zwanzig Felder, die den Wert inline auf 10-14px
+         druecken (Editor, Dialoge, Teilen-Feld). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- ── Primary Meta ──────────────────────────────────── -->
     <title>PATH – Bewerbungsmappe leicht gemacht</title>

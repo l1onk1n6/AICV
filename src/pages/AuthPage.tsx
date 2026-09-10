@@ -114,7 +114,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
             display: 'flex', alignItems: 'center', gap: 6,
             background: 'rgba(var(--rgb-fg),0.08)', border: '1px solid rgba(var(--rgb-fg),0.15)',
             borderRadius: 10, padding: '8px 14px',
-            color: 'rgba(var(--rgb-fg),0.7)', fontSize: 14, cursor: 'pointer',
+            color: 'var(--text-2)', fontSize: 14, cursor: 'pointer',
             backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
             zIndex: 10, transition: 'background 0.2s',
           }}
@@ -139,11 +139,11 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
               <Mail size={26} style={{ color: 'var(--ios-blue)' }} />
             </div>
             <h2 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 8px' }}>{t('E-Mail bestätigen')}</h2>
-            <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)', lineHeight: 1.6, margin: '0 0 20px' }}>
+            <p style={{ fontSize: 13, color: 'var(--text-4)', lineHeight: 1.6, margin: '0 0 20px' }}>
               {t('Wir haben dir eine Bestätigungs-E-Mail geschickt.')}<br />{t('Bitte klicke auf den Link in der E-Mail.')}
             </p>
             {resendSent ? (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 13, color: '#34c759', marginBottom: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 13, color: 'var(--ios-green)', marginBottom: 16 }}>
                 <CheckCircle size={14} /> {t('E-Mail erneut gesendet!')}
               </div>
             ) : (
@@ -160,11 +160,11 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
               </button>
             )}
             {error && (
-              <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', fontSize: 13, color: '#ff6b6b', marginBottom: 12 }}>
+              <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', fontSize: 13, color: 'var(--ios-red)', marginBottom: 12 }}>
                 {t(error)}
               </div>
             )}
-            <button onClick={() => { clearError(); switchMode('login'); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.35)', fontSize: 12 }}>
+            <button onClick={() => { clearError(); switchMode('login'); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-4)', fontSize: 12 }}>
               {t('Zurück zur Anmeldung')}
             </button>
           </div>
@@ -179,7 +179,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
                   flex: 1, padding: '10px 0',
                   background: 'transparent',
                   border: 'none', fontSize: 14, fontWeight: mode === m ? 600 : 400,
-                  color: mode === m ? '#fff' : 'rgba(var(--rgb-fg),0.45)',
+                  color: mode === m ? 'var(--text-1)' : 'var(--text-4)',
                   cursor: 'pointer', fontFamily: 'var(--font-sf)',
                   transition: 'color 150ms ease-out',
                   whiteSpace: 'nowrap',
@@ -217,7 +217,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
                   style={{ paddingRight: 42 }} />
                 <button type="button" onClick={() => setShowPw(!showPw)} style={{
                   position: 'absolute', right: 12, bottom: 10, background: 'none',
-                  border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.4)', padding: 0,
+                  border: 'none', cursor: 'pointer', color: 'var(--text-4)', padding: 0,
                 }}>
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -241,7 +241,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
                 <div style={{ marginBottom: 16, textAlign: 'right' }}>
                   <button type="button" onClick={() => switchMode('forgot')} style={{
                     background: 'none', border: 'none', cursor: 'pointer',
-                    color: 'rgba(var(--rgb-fg),0.4)', fontSize: 12, padding: 0,
+                    color: 'var(--text-4)', fontSize: 12, padding: 0,
                   }}>
                     {t('Passwort vergessen?')}
                   </button>
@@ -257,7 +257,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
               )}
 
               {error && !isLocked && (
-                <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: '#ff6b6b' }}>
+                <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: 'var(--ios-red)' }}>
                   {t(error)}
                 </div>
               )}
@@ -273,7 +273,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
               <>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '24px 0 18px' }}>
                   <div style={{ flex: 1, height: 1, background: 'rgba(var(--rgb-fg),0.08)' }} />
-                  <span style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.3)', letterSpacing: '0.08em' }}>{t('ODER')}</span>
+                  <span style={{ fontSize: 11, color: 'var(--text-4)', letterSpacing: '0.08em' }}>{t('ODER')}</span>
                   <div style={{ flex: 1, height: 1, background: 'rgba(var(--rgb-fg),0.08)' }} />
                 </div>
                 <button
@@ -292,15 +292,15 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
         {/* ── Passwort vergessen ── */}
         {!emailUnconfirmed && mode === 'forgot' && (
           <>
-            <button onClick={() => switchMode('login')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.45)', fontSize: 13, padding: '0 0 16px', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <button onClick={() => switchMode('login')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-4)', fontSize: 13, padding: '0 0 16px', display: 'flex', alignItems: 'center', gap: 6 }}>
               <ArrowLeft size={14} /> {t('Zurück zur Anmeldung')}
             </button>
 
             {resetSent ? (
               <div style={{ textAlign: 'center', padding: '12px 0' }}>
-                <CheckCircle size={40} style={{ color: '#34c759', marginBottom: 12 }} />
+                <CheckCircle size={40} style={{ color: 'var(--ios-green)', marginBottom: 12 }} />
                 <h2 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 8px' }}>{t('E-Mail gesendet')}</h2>
-                <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.5)', lineHeight: 1.6, margin: '0 0 20px' }}>
+                <p style={{ fontSize: 13, color: 'var(--text-4)', lineHeight: 1.6, margin: '0 0 20px' }}>
                   {t('Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte prüfe dein Postfach.')}
                 </p>
                 <button onClick={() => switchMode('login')} className="btn-glass" style={{ width: '100%', justifyContent: 'center', padding: '12px 20px' }}>
@@ -310,7 +310,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
             ) : (
               <form onSubmit={handleSubmit}>
                 <h2 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 6px' }}>{t('Passwort zurücksetzen')}</h2>
-                <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)', margin: '0 0 18px', lineHeight: 1.5 }}>
+                <p style={{ fontSize: 13, color: 'var(--text-4)', margin: '0 0 18px', lineHeight: 1.5 }}>
                   {t('Gib deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen.')}
                 </p>
 
@@ -321,7 +321,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
                 </div>
 
                 {error && (
-                  <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: '#ff6b6b' }}>
+                  <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: 'var(--ios-red)' }}>
                     {t(error)}
                   </div>
                 )}
@@ -338,16 +338,16 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
         {/* ── Magic Link ── */}
         {!emailUnconfirmed && mode === 'magic' && (
           <>
-            <button onClick={() => switchMode('login')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.45)', fontSize: 13, padding: '0 0 16px', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <button onClick={() => switchMode('login')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-4)', fontSize: 13, padding: '0 0 16px', display: 'flex', alignItems: 'center', gap: 6 }}>
               <ArrowLeft size={14} /> {t('Zurück zur Anmeldung')}
             </button>
 
             {magicSent ? (
               <div style={{ textAlign: 'center', padding: '12px 0' }}>
-                <CheckCircle size={40} style={{ color: '#34c759', marginBottom: 12 }} />
+                <CheckCircle size={40} style={{ color: 'var(--ios-green)', marginBottom: 12 }} />
                 <h2 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 8px' }}>{t('Link gesendet')}</h2>
-                <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.5)', lineHeight: 1.6, margin: '0 0 20px' }}>
-                  Wir haben dir einen Anmeldelink an <strong style={{ color: 'rgba(var(--rgb-fg),0.75)' }}>{email}</strong> geschickt. Der Link ist 60 Minuten gültig.
+                <p style={{ fontSize: 13, color: 'var(--text-4)', lineHeight: 1.6, margin: '0 0 20px' }}>
+                  Wir haben dir einen Anmeldelink an <strong style={{ color: 'var(--text-2)' }}>{email}</strong> geschickt. Der Link ist 60 Minuten gültig.
                 </p>
                 <button onClick={() => switchMode('login')} className="btn-glass" style={{ width: '100%', justifyContent: 'center', padding: '12px 20px' }}>
                   {t('Zurück zur Anmeldung')}
@@ -356,7 +356,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
             ) : (
               <form onSubmit={handleSubmit}>
                 <h2 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 6px' }}>{t('Magic Link')}</h2>
-                <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)', margin: '0 0 18px', lineHeight: 1.5 }}>
+                <p style={{ fontSize: 13, color: 'var(--text-4)', margin: '0 0 18px', lineHeight: 1.5 }}>
                   {t('Gib deine E-Mail-Adresse ein. Wir senden dir einen einmaligen Anmeldelink – kein Passwort nötig.')}
                 </p>
 
@@ -367,7 +367,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
                 </div>
 
                 {error && (
-                  <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: '#ff6b6b' }}>
+                  <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: 'var(--ios-red)' }}>
                     {t(error)}
                   </div>
                 )}
@@ -385,7 +385,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
         {!emailUnconfirmed && mode === 'reset' && (
           <form onSubmit={handleSubmit}>
             <h2 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 6px' }}>{t('Neues Passwort')}</h2>
-            <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)', margin: '0 0 18px', lineHeight: 1.5 }}>
+            <p style={{ fontSize: 13, color: 'var(--text-4)', margin: '0 0 18px', lineHeight: 1.5 }}>
               {t('Wähle ein neues Passwort für dein Konto.')}
             </p>
 
@@ -397,7 +397,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
                 required minLength={8} autoFocus autoComplete="new-password" style={{ paddingRight: 42 }} />
               <button type="button" onClick={() => setShowPw(!showPw)} style={{
                 position: 'absolute', right: 12, bottom: 10, background: 'none',
-                border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.4)', padding: 0,
+                border: 'none', cursor: 'pointer', color: 'var(--text-4)', padding: 0,
               }}>
                 {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -427,20 +427,20 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
                 style={{ paddingRight: 42, borderColor: pwMismatch ? 'rgba(255,59,48,0.6)' : undefined }} />
               <button type="button" onClick={() => setShowConfirmPw(!showConfirmPw)} style={{
                 position: 'absolute', right: 12, bottom: 10, background: 'none',
-                border: 'none', cursor: 'pointer', color: 'rgba(var(--rgb-fg),0.4)', padding: 0,
+                border: 'none', cursor: 'pointer', color: 'var(--text-4)', padding: 0,
               }}>
                 {showConfirmPw ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
 
             {pwMismatch && (
-              <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: '#ff6b6b' }}>
+              <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: 'var(--ios-red)' }}>
                 {t('Die Passwörter stimmen nicht überein.')}
               </div>
             )}
 
             {error && (
-              <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: '#ff6b6b' }}>
+              <div style={{ background: 'rgba(255,59,48,0.15)', border: '1px solid rgba(255,59,48,0.3)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', marginBottom: 16, fontSize: 13, color: 'var(--ios-red)' }}>
                 {t(error)}
               </div>
             )}
@@ -457,7 +457,7 @@ export default function AuthPage({ onBack, initialMode = 'login' }: { onBack?: (
       <footer style={{
         marginTop: 20,
         fontSize: 11,
-        color: 'rgba(var(--rgb-fg),0.2)',
+        color: 'var(--text-4)',
         userSelect: 'none',
       }}>
         by pixmatic · v{__APP_VERSION__}

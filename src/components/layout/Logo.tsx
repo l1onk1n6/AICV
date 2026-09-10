@@ -43,10 +43,10 @@ export function LogoFull({ size = 36 }: LogoProps) {
         <LogoIcon size={size} />
       </div>
       <div>
-        <div style={{ fontWeight: 800, fontSize: size * 0.44, letterSpacing: '-0.4px', lineHeight: 1, color: 'rgba(var(--rgb-fg), 0.95)' }}>
+        <div style={{ fontWeight: 800, fontSize: size * 0.44, letterSpacing: '-0.4px', lineHeight: 1, color: 'var(--text-1)' }}>
           Path
         </div>
-        <div style={{ fontSize: size * 0.27, color: 'rgba(var(--rgb-fg),0.38)', marginTop: 2, fontWeight: 400, letterSpacing: '0.02em' }}>
+        <div style={{ fontSize: size * 0.27, color: 'var(--text-4)', marginTop: 2, fontWeight: 400, letterSpacing: '0.02em' }}>
           by pixmatic
         </div>
       </div>

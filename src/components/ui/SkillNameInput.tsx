@@ -101,13 +101,13 @@ export default function SkillNameInput({ value, onChange, onPick, placeholder, m
                 padding: '7px 10px',
                 background: i === highlight ? 'rgba(var(--rgb-fg), 0.06)' : 'transparent',
                 border: 'none', cursor: 'pointer',
-                color: 'rgba(var(--rgb-fg), 0.92)',
+                color: 'var(--text-1)',
                 fontFamily: 'var(--font-sf)',
                 fontSize: 13,
               }}
             >
               <span>{s.name}</span>
-              <span style={{ fontSize: 11, color: 'rgba(var(--rgb-fg), 0.4)' }}>{s.category}</span>
+              <span style={{ fontSize: 11, color: 'var(--text-4)' }}>{s.category}</span>
             </button>
           ))}
         </div>

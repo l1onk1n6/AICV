@@ -162,6 +162,7 @@ export default function LandingPage() {
       {(['de', 'en'] as const).map(code => (
         <button
           key={code}
+          className="tap44"
           onClick={() => setLocale(code)}
           aria-pressed={locale === code}
           aria-label={code === 'de' ? 'Deutsch' : 'English'}
@@ -171,11 +172,11 @@ export default function LandingPage() {
             padding: '5px 10px', borderRadius: 8,
             textTransform: 'uppercase',
             background: locale === code ? 'rgba(0,122,255,0.18)' : 'transparent',
-            color: locale === code ? '#fff' : 'rgba(var(--rgb-fg),0.55)',
+            color: locale === code ? '#fff' : 'var(--text-3)',
             transition: 'background 0.15s, color 0.15s',
           }}
           onMouseEnter={e => { if (locale !== code) e.currentTarget.style.color = '#fff'; }}
-          onMouseLeave={e => { if (locale !== code) e.currentTarget.style.color = 'rgba(var(--rgb-fg),0.55)'; }}
+          onMouseLeave={e => { if (locale !== code) e.currentTarget.style.color = 'var(--text-3)'; }}
         >
           {code}
         </button>
@@ -186,6 +187,12 @@ export default function LandingPage() {
   return (
     <div
       ref={containerRef}
+      // .force-dark erzwingt die Dark-Tokens. Frueher standen --rgb-fg und
+      // --rgb-bg hier inline; seit es die Textfarben-Leiter (--text-1 … -4)
+      // gibt, reicht das nicht mehr: die Leiter wird bereits auf <body>
+      // aufgeloest und erbt danach als fertige Farbe. Die Klasse setzt beide
+      // Ebenen und zusaetzlich die iOS-Farben auf ihre Dunkel-Varianten.
+      className="force-dark"
       style={{
         height: '100dvh',
         overflowY: 'auto',
@@ -194,10 +201,6 @@ export default function LandingPage() {
         background: '#0c0c0e',
         color: '#fff',
         scrollBehavior: 'smooth',
-        // Landing-Page ist immer Dark — unabhängig vom App-Theme.
-        // Erzwingt Dark-Tokens, damit rgba(var(--rgb-fg), …) hell statt dunkel ist.
-        ['--rgb-fg' as never]: '255, 255, 255',
-        ['--rgb-bg' as never]: '12, 12, 14',
       }}
     >
       {/* ── Sticky Nav ──────────────────────────────────────── */}
@@ -223,11 +226,11 @@ export default function LandingPage() {
 
         {/* Nav links – erst ab 1024 px, darunter fehlt die Breite */}
         {!isCompactNav && (
-          <div style={{ display: 'flex', gap: 32, fontSize: 14, color: 'rgba(var(--rgb-fg),0.65)' }}>
+          <div style={{ display: 'flex', gap: 32, fontSize: 14, color: 'var(--text-3)' }}>
             {[['features', t('Features')], ['how', t("So funktioniert's")], ['pricing', t('Preise')]].map(([id, label]) => (
               <button key={id} onClick={() => scrollTo(id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit', padding: 0, transition: 'color 0.2s' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(var(--rgb-fg),0.65)')}>
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-3)')}>
                 {label}
               </button>
             ))}
@@ -237,17 +240,17 @@ export default function LandingPage() {
         {/* Auth buttons */}
         <div style={{ display: 'flex', gap: isMobile ? 8 : 10, alignItems: 'center' }}>
           {!isMobile && langPicker}
-          {!isTinyNav && <button onClick={() => setShowAuth('login')} style={{
+          {!isTinyNav && <button className="tap44" onClick={() => setShowAuth('login')} style={{
             background: 'none', border: 'none', cursor: 'pointer',
-            color: 'rgba(var(--rgb-fg),0.65)', fontSize: isMobile ? 13 : 14, padding: isMobile ? '8px 10px' : '8px 14px',
+            color: 'var(--text-3)', fontSize: isMobile ? 13 : 14, padding: isMobile ? '8px 10px' : '8px 14px',
             borderRadius: 10, transition: 'color 0.2s', whiteSpace: 'nowrap', flexShrink: 0,
           }}
             onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(var(--rgb-fg),0.65)')}>
+            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-3)')}>
             {t('Anmelden')}
           </button>}
-          <button onClick={() => setShowAuth('register')} style={{
-            background: 'rgba(0,122,255,0.9)', border: 'none', cursor: 'pointer',
+          <button className="tap44" onClick={() => setShowAuth('register')} style={{
+            background: 'var(--fill-blue)', border: 'none', cursor: 'pointer',
             color: '#fff', fontSize: isMobile ? 13 : 14, fontWeight: 600,
             padding: isMobile ? '9px 13px' : '9px 18px', borderRadius: 10,
             transition: 'background 0.2s, transform 0.15s',
@@ -255,8 +258,10 @@ export default function LandingPage() {
             // um und die Leiste wird 30 px hoeher.
             whiteSpace: 'nowrap', flexShrink: 0,
           }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#007AFF'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,122,255,0.9)'; e.currentTarget.style.transform = 'none'; }}>
+            // Beim Hover wird abgedunkelt statt aufgehellt: weisse Schrift auf
+            // dem helleren #007AFF kaeme nur auf 4,02:1.
+            onMouseEnter={e => { e.currentTarget.style.background = '#005FC7'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'var(--fill-blue)'; e.currentTarget.style.transform = 'none'; }}>
             {t('Kostenlos starten')}
           </button>
         </div>
@@ -277,7 +282,7 @@ export default function LandingPage() {
             <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 99, background: 'rgba(255,159,10,0.25)', border: '1px solid rgba(255,159,10,0.4)', color: '#FF9F0A', letterSpacing: '0.06em', flexShrink: 0 }}>
               LAUNCH-ANGEBOT
             </span>
-            <span style={{ fontSize: isMobile ? 13 : 14, fontWeight: 600, color: 'rgba(var(--rgb-fg),0.9)' }}>
+            <span style={{ fontSize: isMobile ? 13 : 14, fontWeight: 600, color: 'var(--text-1)' }}>
               50% Rabatt im ersten Monat —{' '}
               <span style={{ color: '#FF9F0A' }}>CHF 2.50 statt CHF 5</span>
             </span>
@@ -299,7 +304,7 @@ export default function LandingPage() {
 
           {/* Countdown */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.45)', flexShrink: 0 }}>{t('Noch')}</span>
+            <span style={{ fontSize: 11, color: 'var(--text-4)', flexShrink: 0 }}>{t('Noch')}</span>
             {[
               [countdown.days,    'd'],
               [countdown.hours,   'h'],
@@ -314,7 +319,7 @@ export default function LandingPage() {
                 }}>
                   {String(val).padStart(2, '0')}
                 </span>
-                <span style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)', marginRight: 4 }}>{unit}</span>
+                <span style={{ fontSize: 11, color: 'var(--text-4)', marginRight: 4 }}>{unit}</span>
               </span>
             ))}
           </div>
@@ -323,7 +328,7 @@ export default function LandingPage() {
           <button onClick={() => setShowAuth('register')} style={{
             fontSize: 12, fontWeight: 700, padding: '6px 14px', borderRadius: 8, flexShrink: 0,
             background: 'linear-gradient(135deg, #FF9F0A, #FF375F)',
-            border: 'none', color: '#fff', cursor: 'pointer',
+            border: 'none', color: '#1c1c1e', cursor: 'pointer',
             boxShadow: '0 3px 12px rgba(255,159,10,0.35)',
             transition: 'transform 0.15s, box-shadow 0.15s',
           }}
@@ -375,7 +380,7 @@ export default function LandingPage() {
           <p style={{
             margin: '0 0 36px',
             fontSize: isMobile ? 16 : 18,
-            color: 'rgba(var(--rgb-fg),0.6)',
+            color: 'var(--text-3)',
             lineHeight: 1.65,
             maxWidth: 480,
           }}>
@@ -400,7 +405,7 @@ export default function LandingPage() {
               display: 'flex', alignItems: 'center', gap: 8,
               background: 'rgba(var(--rgb-fg),0.08)', border: '1px solid rgba(var(--rgb-fg),0.15)',
               borderRadius: 14, cursor: 'pointer',
-              color: 'rgba(var(--rgb-fg),0.8)', fontSize: 16, fontWeight: 500,
+              color: 'var(--text-2)', fontSize: 16, fontWeight: 500,
               padding: '14px 28px',
               transition: 'background 0.2s, transform 0.2s',
             }}
@@ -412,7 +417,7 @@ export default function LandingPage() {
 
           <div style={{ display: 'flex', gap: 20, marginTop: 28, flexWrap: 'wrap' }}>
             {['Kostenlos starten', 'Keine Kreditkarte nötig', 'DSGVO-konform'].map(label => (
-              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'rgba(var(--rgb-fg),0.45)' }}>
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-4)' }}>
                 <Check size={14} style={{ color: '#34C759', flexShrink: 0 }} /> {t(label)}
               </div>
             ))}
@@ -443,7 +448,7 @@ export default function LandingPage() {
           ].map(([val, label]) => (
             <div key={label} style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.5px', color: '#fff' }}>{val}</div>
-              <div style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.4)', marginTop: 4 }}>{t(label)}</div>
+              <div style={{ fontSize: 13, color: 'var(--text-4)', marginTop: 4 }}>{t(label)}</div>
             </div>
           ))}
         </div>
@@ -455,7 +460,7 @@ export default function LandingPage() {
           <h2 style={{ fontSize: isMobile ? 30 : 42, fontWeight: 800, margin: '0 0 16px', letterSpacing: '-0.8px' }}>
             {t('Alles was du brauchst')}
           </h2>
-          <p style={{ fontSize: 17, color: 'rgba(var(--rgb-fg),0.5)', margin: 0, maxWidth: 520, marginInline: 'auto', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 17, color: 'var(--text-4)', margin: 0, maxWidth: 520, marginInline: 'auto', lineHeight: 1.6 }}>
             {t('Von der ersten Idee bis zum fertigen PDF — PATH begleitet dich durch den gesamten Bewerbungsprozess.')}
           </p>
         </div>
@@ -483,7 +488,7 @@ export default function LandingPage() {
                 <Icon size={20} style={{ color }} />
               </div>
               <h3 style={{ fontSize: 17, fontWeight: 700, margin: '0 0 10px' }}>{t(title)}</h3>
-              <p style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.5)', margin: 0, lineHeight: 1.6 }}>{t(desc)}</p>
+              <p style={{ fontSize: 14, color: 'var(--text-4)', margin: 0, lineHeight: 1.6 }}>{t(desc)}</p>
             </div>
           ))}
         </div>
@@ -504,7 +509,7 @@ export default function LandingPage() {
             <h2 style={{ fontSize: isMobile ? 30 : 42, fontWeight: 800, margin: '0 0 16px', letterSpacing: '-0.8px' }}>
               {t('KI übernimmt die schwere Arbeit')}
             </h2>
-            <p style={{ fontSize: 17, color: 'rgba(var(--rgb-fg),0.5)', margin: 0, maxWidth: 520, marginInline: 'auto', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 17, color: 'var(--text-4)', margin: 0, maxWidth: 520, marginInline: 'auto', lineHeight: 1.6 }}>
               {t('Claude AI – eines der leistungsfähigsten Sprachmodelle der Welt – ist direkt in PATH integriert.')}
             </p>
           </div>
@@ -526,7 +531,7 @@ export default function LandingPage() {
                     <h3 style={{ fontSize: 16, fontWeight: 700, margin: 0 }}>{t(title)}</h3>
                     <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 99, background: 'rgba(175,82,222,0.25)', color: '#CF9FFF', letterSpacing: '0.04em', flexShrink: 0 }}>{badge}</span>
                   </div>
-                  <p style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.55)', margin: 0, lineHeight: 1.65 }}>{t(desc)}</p>
+                  <p style={{ fontSize: 14, color: 'var(--text-3)', margin: 0, lineHeight: 1.65 }}>{t(desc)}</p>
                 </div>
               </div>
             ))}
@@ -546,7 +551,7 @@ export default function LandingPage() {
             <h2 style={{ fontSize: isMobile ? 30 : 42, fontWeight: 800, margin: '0 0 16px', letterSpacing: '-0.8px' }}>
               {t('In 4 Schritten zur Bewerbung')}
             </h2>
-            <p style={{ fontSize: 17, color: 'rgba(var(--rgb-fg),0.5)', margin: 0, lineHeight: 1.6 }}>
+            <p style={{ fontSize: 17, color: 'var(--text-4)', margin: 0, lineHeight: 1.6 }}>
               {t('Einfach und schnell — ohne komplizierte Software.')}
             </p>
           </div>
@@ -576,7 +581,7 @@ export default function LandingPage() {
                   {num}
                 </div>
                 <h3 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 8px' }}>{t(title)}</h3>
-                <p style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.5)', margin: 0, lineHeight: 1.6 }}>{t(desc)}</p>
+                <p style={{ fontSize: 14, color: 'var(--text-4)', margin: 0, lineHeight: 1.6 }}>{t(desc)}</p>
               </div>
             ))}
           </div>
@@ -599,7 +604,7 @@ export default function LandingPage() {
           <blockquote style={{ fontSize: isMobile ? 20 : 26, fontWeight: 600, margin: '0 0 20px', lineHeight: 1.4, letterSpacing: '-0.3px' }}>
             "Endlich eine Bewerbungs-App die nicht aussieht wie aus den 90ern — und trotzdem in der Schweiz funktioniert."
           </blockquote>
-          <div style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.4)' }}>{t('Zufriedener Nutzer aus Zürich')}</div>
+          <div style={{ fontSize: 14, color: 'var(--text-4)' }}>{t('Zufriedener Nutzer aus Zürich')}</div>
         </div>
       </section>
 
@@ -630,7 +635,7 @@ export default function LandingPage() {
               {t('Android & iOS')}
             </span>
           </h2>
-          <p style={{ fontSize: 17, color: 'rgba(var(--rgb-fg),0.5)', margin: '0 auto 52px', maxWidth: 520, lineHeight: 1.65 }}>
+          <p style={{ fontSize: 17, color: 'var(--text-4)', margin: '0 auto 52px', maxWidth: 520, lineHeight: 1.65 }}>
             {t('Alle deine Bewerbungsunterlagen immer dabei — bearbeiten, exportieren und teilen, direkt vom Handy.')}
           </p>
 
@@ -656,11 +661,11 @@ export default function LandingPage() {
               </div>
               <div>
                 <div style={{ fontSize: 20, fontWeight: 800, marginBottom: 6 }}>{t('Android')}</div>
-                <div style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.5)', lineHeight: 1.5 }}>{t('Google Play Store')}</div>
+                <div style={{ fontSize: 14, color: 'var(--text-4)', lineHeight: 1.5 }}>{t('Google Play Store')}</div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', textAlign: 'left' }}>
                 {['Volle Offline-Unterstützung', 'Push-Erinnerungen für Deadlines', 'Native PDF-Speicherung'].map(f => (
-                  <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(var(--rgb-fg),0.65)' }}>
+                  <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-3)' }}>
                     <Check size={14} style={{ color: '#34C759', flexShrink: 0 }} /> {f}
                   </div>
                 ))}
@@ -690,11 +695,11 @@ export default function LandingPage() {
               </div>
               <div>
                 <div style={{ fontSize: 20, fontWeight: 800, marginBottom: 6 }}>iPhone & iPad</div>
-                <div style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.5)', lineHeight: 1.5 }}>{t('Apple App Store')}</div>
+                <div style={{ fontSize: 14, color: 'var(--text-4)', lineHeight: 1.5 }}>{t('Apple App Store')}</div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', textAlign: 'left' }}>
                 {['Nahtlose iCloud-Synchronisation', 'Face ID & Touch ID Login', 'Apple Pencil Unterstützung'].map(f => (
-                  <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(var(--rgb-fg),0.65)' }}>
+                  <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-3)' }}>
                     <Check size={14} style={{ color: '#007AFF', flexShrink: 0 }} /> {f}
                   </div>
                 ))}
@@ -709,7 +714,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <p style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.3)', margin: 0 }}>
+          <p style={{ fontSize: 13, color: 'var(--text-4)', margin: 0 }}>
             {t('Web-App bereits jetzt kostenlos nutzbar — Apps folgen in Kürze.')}
           </p>
         </div>
@@ -730,7 +735,7 @@ export default function LandingPage() {
               {t('Traumstelle?')}
             </span>
           </h2>
-          <p style={{ fontSize: 17, color: 'rgba(var(--rgb-fg),0.55)', margin: '0 0 36px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 17, color: 'var(--text-3)', margin: '0 0 36px', lineHeight: 1.6 }}>
             {t('Erstelle in wenigen Minuten einen Lebenslauf, der überzeugt. Kostenlos, ohne Kreditkarte.')}
           </p>
           <button onClick={() => setShowAuth('register')} style={{
@@ -746,7 +751,7 @@ export default function LandingPage() {
             onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 40px rgba(0,122,255,0.35)'; }}>
             Jetzt kostenlos starten <ChevronRight size={20} />
           </button>
-          <div style={{ marginTop: 20, fontSize: 13, color: 'rgba(var(--rgb-fg),0.3)' }}>
+          <div style={{ marginTop: 20, fontSize: 13, color: 'var(--text-4)' }}>
             Kein Abo nötig · Jederzeit kündbar · DSGVO-konform
           </div>
         </div>
@@ -762,7 +767,7 @@ export default function LandingPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <LogoIcon size={24} />
             <span style={{ fontWeight: 700, fontSize: 15 }}>PATH</span>
-            <span style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.3)' }}>by pixmatic</span>
+            <span style={{ fontSize: 12, color: 'var(--text-4)' }}>by pixmatic</span>
           </div>
 
           <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
@@ -771,10 +776,10 @@ export default function LandingPage() {
               ['https://pixmatic.ch/agb', 'AGB'],
               ['mailto:info@pixmatic.ch', 'Kontakt'],
             ].map(([href, label]) => (
-              <button key={label} type="button" onClick={() => openExternal(href)}
-                style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.4)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', transition: 'color 0.2s' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(var(--rgb-fg),0.8)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(var(--rgb-fg),0.4)')}>
+              <button key={label} type="button" className="tap44" onClick={() => openExternal(href)}
+                style={{ fontSize: 13, color: 'var(--text-3)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', transition: 'color 0.2s' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-2)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-3)')}>
                 {t(label)}
               </button>
             ))}
@@ -783,7 +788,7 @@ export default function LandingPage() {
           {/* Auf dem Telefon steht der Sprachumschalter hier statt in der Kopfzeile */}
           {isMobile && langPicker}
 
-          <div style={{ fontSize: 12, color: 'rgba(var(--rgb-fg),0.25)' }}>
+          <div style={{ fontSize: 12, color: 'var(--text-4)' }}>
             © {new Date().getFullYear()} pixmatic. Alle Rechte vorbehalten.
           </div>
         </div>
@@ -811,7 +816,7 @@ function PricingSection({ isMobile, onRegister }: { isMobile: boolean; onRegiste
         <h2 style={{ fontSize: isMobile ? 30 : 42, fontWeight: 800, margin: '0 0 16px', letterSpacing: '-0.8px' }}>
           {t('Transparent & fair')}
         </h2>
-        <p style={{ fontSize: 17, color: 'rgba(var(--rgb-fg),0.5)', margin: '0 0 28px', lineHeight: 1.6 }}>
+        <p style={{ fontSize: 17, color: 'var(--text-4)', margin: '0 0 28px', lineHeight: 1.6 }}>
           {t('Kostenlos starten, bei Bedarf upgraden. Jederzeit kündbar.')}
         </p>
 
@@ -823,9 +828,10 @@ function PricingSection({ isMobile, onRegister }: { isMobile: boolean; onRegiste
               onClick={() => setBilling(b)}
               style={{
                 padding: '8px 20px', borderRadius: 9, border: 'none', cursor: 'pointer',
+                minHeight: 44,
                 fontSize: 14, fontWeight: 600, transition: 'all 0.15s',
                 background: billing === b ? 'rgba(0,122,255,0.85)' : 'transparent',
-                color: billing === b ? '#fff' : 'rgba(var(--rgb-fg),0.5)',
+                color: billing === b ? '#fff' : 'var(--text-3)',
                 display: 'flex', alignItems: 'center', gap: 7,
               }}
             >
@@ -841,15 +847,15 @@ function PricingSection({ isMobile, onRegister }: { isMobile: boolean; onRegiste
         {/* Free */}
         <div style={{ background: 'rgba(var(--rgb-fg),0.04)', border: '1px solid rgba(var(--rgb-fg),0.1)', borderRadius: 24, padding: 36 }}>
           <div style={{ marginBottom: 28 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(var(--rgb-fg),0.5)', marginBottom: 8, letterSpacing: '0.06em' }}>KOSTENLOS</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-4)', marginBottom: 8, letterSpacing: '0.06em' }}>KOSTENLOS</div>
             <div style={{ fontSize: 44, fontWeight: 800, letterSpacing: '-1px' }}>CHF 0</div>
-            <div style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.4)', marginTop: 4 }}>{t('Für immer kostenlos')}</div>
+            <div style={{ fontSize: 14, color: 'var(--text-4)', marginTop: 4 }}>{t('Für immer kostenlos')}</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 32 }}>
             {FREE_FEATURES.map(f => (
               <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}>
-                <Check size={15} style={{ color: 'rgba(var(--rgb-fg),0.35)', flexShrink: 0 }} />
-                <span style={{ color: 'rgba(var(--rgb-fg),0.65)' }}>{t(f)}</span>
+                <Check size={15} style={{ color: 'var(--text-4)', flexShrink: 0 }} />
+                <span style={{ color: 'var(--text-3)' }}>{t(f)}</span>
               </div>
             ))}
           </div>
@@ -878,7 +884,7 @@ function PricingSection({ isMobile, onRegister }: { isMobile: boolean; onRegiste
           <div style={{ marginBottom: 28 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <Sparkles size={14} style={{ color: '#FF9F0A' }} />
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(var(--rgb-fg),0.7)', letterSpacing: '0.06em' }}>PATH PRO</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-2)', letterSpacing: '0.06em' }}>PATH PRO</div>
             </div>
 
             {isYearly ? (
@@ -886,9 +892,9 @@ function PricingSection({ isMobile, onRegister }: { isMobile: boolean; onRegiste
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
                   <div style={{ fontSize: 44, fontWeight: 800, letterSpacing: '-1px' }}>
                     CHF 49
-                    <span style={{ fontSize: 18, fontWeight: 500, color: 'rgba(var(--rgb-fg),0.5)', letterSpacing: 0 }}> / Jahr</span>
+                    <span style={{ fontSize: 18, fontWeight: 500, color: 'var(--text-4)', letterSpacing: 0 }}> / Jahr</span>
                   </div>
-                  <span style={{ fontSize: 13, color: 'rgba(var(--rgb-fg),0.35)', textDecoration: 'line-through' }}>CHF 60</span>
+                  <span style={{ fontSize: 13, color: 'var(--text-4)', textDecoration: 'line-through' }}>CHF 60</span>
                 </div>
                 <div style={{ fontSize: 14, color: '#34C759', marginTop: 4, fontWeight: 600 }}>
                   CHF 4.08 / Monat · 2 Monate gratis
@@ -898,9 +904,9 @@ function PricingSection({ isMobile, onRegister }: { isMobile: boolean; onRegiste
               <>
                 <div style={{ fontSize: 44, fontWeight: 800, letterSpacing: '-1px' }}>
                   CHF 5
-                  <span style={{ fontSize: 18, fontWeight: 500, color: 'rgba(var(--rgb-fg),0.5)', letterSpacing: 0 }}> / Monat</span>
+                  <span style={{ fontSize: 18, fontWeight: 500, color: 'var(--text-4)', letterSpacing: 0 }}> / Monat</span>
                 </div>
-                <div style={{ fontSize: 14, color: 'rgba(var(--rgb-fg),0.4)', marginTop: 4 }}>{t('Jederzeit kündbar')}</div>
+                <div style={{ fontSize: 14, color: 'var(--text-4)', marginTop: 4 }}>{t('Jederzeit kündbar')}</div>
               </>
             )}
           </div>
@@ -927,7 +933,7 @@ function PricingSection({ isMobile, onRegister }: { isMobile: boolean; onRegiste
             <Sparkles size={15} /> {isYearly ? t('Jetzt starten — CHF 49 / Jahr') : t('Jetzt PATH Pro holen')}
           </button>
 
-          <div style={{ textAlign: 'center', marginTop: 12, fontSize: 12, color: 'rgba(var(--rgb-fg),0.3)' }}>
+          <div style={{ textAlign: 'center', marginTop: 12, fontSize: 12, color: 'var(--text-4)' }}>
             Sichere Zahlung via Stripe · Keine versteckten Kosten
           </div>
         </div>
@@ -978,7 +984,7 @@ function MockAppPreview() {
           <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg, #34C759, #00C7BE)', flexShrink: 0 }} />
           <div>
             <div style={{ fontSize: 13, fontWeight: 700 }}>{t('Max Mustermann')}</div>
-            <div style={{ fontSize: 11, color: 'rgba(var(--rgb-fg),0.4)' }}>{t('Softwareentwickler')}</div>
+            <div style={{ fontSize: 11, color: 'var(--text-4)' }}>{t('Softwareentwickler')}</div>
           </div>
           <div style={{ marginLeft: 'auto', fontSize: 10, padding: '3px 8px', borderRadius: 99, background: 'rgba(0,122,255,0.15)', border: '1px solid rgba(0,122,255,0.25)', color: 'var(--ios-blue)' }}>
             Modern
@@ -987,14 +993,14 @@ function MockAppPreview() {
 
         {/* Progress/sections */}
         {[
-          { label: 'Persönliche Daten', pct: 100, color: '#34C759' },
-          { label: 'Berufserfahrung', pct: 80, color: '#007AFF' },
-          { label: 'Ausbildung', pct: 100, color: '#34C759' },
-          { label: 'Fähigkeiten', pct: 60, color: '#FF9F0A' },
-          { label: 'Anschreiben', pct: 45, color: '#AF52DE' },
+          { label: 'Persönliche Daten', pct: 100, color: 'var(--ios-green)' },
+          { label: 'Berufserfahrung', pct: 80, color: 'var(--ios-blue)' },
+          { label: 'Ausbildung', pct: 100, color: 'var(--ios-green)' },
+          { label: 'Fähigkeiten', pct: 60, color: 'var(--ios-amber)' },
+          { label: 'Anschreiben', pct: 45, color: 'var(--ios-purple)' },
         ].map(({ label, pct, color }) => (
           <div key={label} style={{ marginBottom: 12 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 5, color: 'rgba(var(--rgb-fg),0.6)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 5, color: 'var(--text-3)' }}>
               <span>{t(label)}</span>
               <span style={{ color }}>{pct}%</span>
             </div>
@@ -1015,7 +1021,7 @@ function MockAppPreview() {
             <Download size={14} style={{ color: '#007AFF' }} />
             <span>PDF exportieren</span>
           </div>
-          <ArrowRight size={14} style={{ color: 'rgba(var(--rgb-fg),0.4)' }} />
+          <ArrowRight size={14} style={{ color: 'var(--text-4)' }} />
         </div>
       </div>
 

@@ -65,7 +65,13 @@ function DesktopIframePreview({ bytes, building, error }: Props) {
       ) : url ? (
         <iframe
           title={t("Vorschau")}
-          src={url}
+          // #toolbar=0&navpanes=0 blendet Chromes eigene Werkzeugleiste und die
+          // Seitenleiste aus. Am 10.09. an Chrome 152 nachgemessen, weil offen
+          // war, ob das an einer Blob-URL ueberhaupt beachtet wird: es wird.
+          // Belege: data/path-ui-rest/pdf/blob-{ohne,mit}-fragment.png im
+          // Jarvis-Workspace. Ohne das Fragment stand die dunkle Leiste samt
+          // Zufalls-ID des Blobs als Dateiname in der hellen Oberflaeche.
+          src={`${url}#toolbar=0&navpanes=0`}
           style={{ width: '100%', height: '100%', border: 'none', background: '#555' }}
         />
       ) : (
@@ -170,8 +176,8 @@ function MobileCanvasPreview({ bytes, building, error }: Props) {
 
 function SpinnerOverlay({ label }: { label?: string }) {
   return (
-    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, color: 'rgba(var(--rgb-fg),0.7)', pointerEvents: 'none' }}>
-      <Loader2 size={22} style={{ animation: 'spin 1s linear infinite' }} />
+    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, color: 'rgba(255,255,255,0.85)', pointerEvents: 'none' }}>
+      <Loader2 size={22} data-motion="essential" style={{ animation: 'spin 1s linear infinite' }} />
       {label ? <span style={{ fontSize: 13 }}>{label}</span> : null}
     </div>
   );
@@ -180,7 +186,7 @@ function SpinnerOverlay({ label }: { label?: string }) {
 function ErrorOverlay({ message }: { message: string }) {
   return (
     <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
-      <div style={{ maxWidth: 360, color: 'rgba(var(--rgb-fg),0.85)' }}>
+      <div style={{ maxWidth: 360, color: 'rgba(255,255,255,0.92)' }}>
         <AlertCircle size={28} style={{ opacity: 0.7, marginBottom: 10 }} />
         <p style={{ fontSize: 13, lineHeight: 1.5 }}>{message}</p>
       </div>
